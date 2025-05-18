@@ -1,0 +1,247 @@
+import { IPhieucanRepository } from "../../domain/repositories/IRepositoryInterfaces";
+import { Phieucan } from "../../domain/entities/Phieucan";
+import { NotFoundError, ValidationError } from "../../utils/errors/AppError";
+
+export class PhieucanService {
+  constructor(private phieucanRepository: IPhieucanRepository) {}
+
+  async getAllPhieucans(): Promise<Phieucan[]> {
+    return this.phieucanRepository.getAll();
+  }
+
+  async getPhieucanById(id: number): Promise<Phieucan> {
+    const phieucan = await this.phieucanRepository.getById(id);
+    if (!phieucan) {
+      throw new NotFoundError(`Phiếu cân với ID ${id} không tồn tại`);
+    }
+    return phieucan;
+  }
+
+  async createPhieucan(phieucanData: Partial<Phieucan>): Promise<Phieucan> {
+    // Validation
+    if (!phieucanData.soxe) {
+      throw new ValidationError("Số xe không được để trống");
+    }
+
+    // Generate sophieu as next available number if not provided
+    if (!phieucanData.sophieu) {
+      const allPhieucans = await this.phieucanRepository.getAll();
+      const maxSophieu = allPhieucans.reduce((max, phieucan) => {
+        return phieucan.sophieu && phieucan.sophieu > max
+          ? phieucan.sophieu
+          : max;
+      }, 0);
+      phieucanData.sophieu = maxSophieu + 1;
+    }
+
+    // Set defaults
+    if (!phieucanData.ngaycan1) {
+      phieucanData.ngaycan1 = new Date();
+    }
+
+    if (phieucanData.uploadStatus === undefined) {
+      phieucanData.uploadStatus = 0;
+    }
+
+    return this.phieucanRepository.create(phieucanData);
+  }
+
+  async updatePhieucan(
+    id: number,
+    phieucanData: Partial<Phieucan>
+  ): Promise<Phieucan> {
+    const phieucan = await this.phieucanRepository.getById(id);
+    if (!phieucan) {
+      throw new NotFoundError(`Phiếu cân với ID ${id} không tồn tại`);
+    }
+
+    const updatedPhieucan = await this.phieucanRepository.update(
+      id,
+      phieucanData
+    );
+    if (!updatedPhieucan) {
+      throw new Error("Cập nhật phiếu cân thất bại");
+    }
+
+    return updatedPhieucan;
+  }
+
+  async deletePhieucan(id: number): Promise<boolean> {
+    const phieucan = await this.phieucanRepository.getById(id);
+    if (!phieucan) {
+      throw new NotFoundError(`Phiếu cân với ID ${id} không tồn tại`);
+    }
+
+    return this.phieucanRepository.delete(id);
+  }
+
+  async getTodayStatistics(): Promise<{
+    totalVehicles: number;
+    totalWeight: number;
+    byCompany: {
+      companyName: string;
+      weighCount: number;
+      totalWeight: number;
+    }[];
+    byProduct: {
+      productName: string;
+      weighCount: number;
+      totalWeight: number;
+    }[];
+    byVehicle: {
+      vehicleNumber: string;
+      weighCount: number;
+      totalWeight: number;
+      averageWeight: number;
+    }[];
+    byDay: {
+      date: string;
+      weighCount: number;
+      totalWeight: number;
+    }[];
+  }> {
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+    const todayRecords = await this.phieucanRepository.getTodayRecords();
+    const totalWeight = await this.phieucanRepository.sumWeightByDateRange(
+      startDate,
+      endDate
+    );
+    const byCompany =
+      await this.phieucanRepository.getWeightStatisticsByCompany();
+    const byProduct =
+      await this.phieucanRepository.getWeightStatisticsByProduct();
+
+    const byVehicle =
+      await this.phieucanRepository.getWeightStatisticsByVehicle();
+    const byDay = await this.phieucanRepository.getWeightStatisticsByDay(
+      startDate,
+      endDate
+    );
+
+    // Calculate total weight for all today
+
+    return {
+      totalVehicles: todayRecords.length,
+      totalWeight,
+      byCompany,
+      byProduct,
+      byVehicle,
+      byDay,
+    };
+  }
+
+  async getWeightStatistics(startDate: Date, endDate: Date): Promise<any> {
+    const totalVehicles = await this.phieucanRepository.countByDateRange(
+      startDate,
+      endDate
+    );
+    const totalWeight = await this.phieucanRepository.sumWeightByDateRange(
+      startDate,
+      endDate
+    );
+    const byCompany =
+      await this.phieucanRepository.getWeightStatisticsByCompany();
+    const byProduct =
+      await this.phieucanRepository.getWeightStatisticsByProduct();
+    const byVehicle =
+      await this.phieucanRepository.getWeightStatisticsByVehicle();
+    const byDay = await this.phieucanRepository.getWeightStatisticsByDay(
+      startDate,
+      endDate
+    );
+
+    return {
+      totalVehicles,
+      totalWeight,
+      byCompany,
+      byProduct,
+      byVehicle,
+      byDay,
+    };
+  }
+
+  async completeWeighing(
+    id: number,
+    secondWeightData: { tlcan2: number; ngaycan2: Date }
+  ): Promise<Phieucan> {
+    const phieucan = await this.phieucanRepository.getById(id);
+    if (!phieucan) {
+      throw new NotFoundError(`Phiếu cân với ID ${id} không tồn tại`);
+    }
+
+    if (phieucan.ngaycan2) {
+      throw new ValidationError("Phiếu cân này đã hoàn thành");
+    }
+
+    const updateData = {
+      ...secondWeightData,
+      uploadStatus: 0, // Mark as completed
+    };
+
+    const updatedPhieucan = await this.phieucanRepository.update(
+      id,
+      updateData
+    );
+    if (!updatedPhieucan) {
+      throw new Error("Cập nhật phiếu cân thất bại");
+    }
+
+    return updatedPhieucan;
+  }
+
+  async getCompletedWeighings(): Promise<Phieucan[]> {
+    return this.phieucanRepository.getCompleted();
+  }
+
+  async getPendingWeighings(): Promise<Phieucan[]> {
+    return this.phieucanRepository.getPending();
+  }
+
+  async getCanceledWeighings(): Promise<Phieucan[]> {
+    return this.phieucanRepository.getCanceledOrDeleted();
+  }
+
+  async getPhieucansByVehicle(soxe: string): Promise<Phieucan[]> {
+    return this.phieucanRepository.getBySoxe(soxe);
+  }
+
+  async getPhieucansByProduct(mahang: string): Promise<Phieucan[]> {
+    return this.phieucanRepository.getByMahang(mahang);
+  }
+
+  async getPhieucansByCustomer(makh: string): Promise<Phieucan[]> {
+    return this.phieucanRepository.getByKhachhang(makh);
+  }
+
+  async getPhieucansByDateRange(
+    startDate: Date,
+    endDate: Date
+  ): Promise<Phieucan[]> {
+    return this.phieucanRepository.getByDateRange(startDate, endDate);
+  }
+
+  async cancelPhieucan(id: number, reason: string): Promise<Phieucan> {
+    const phieucan = await this.phieucanRepository.getById(id);
+    if (!phieucan) {
+      throw new NotFoundError(`Phiếu cân với ID ${id} không tồn tại`);
+    }
+
+    const updateData = {
+      uploadStatus: 1, // Mark as canceled
+      ghichu: reason,
+    };
+
+    const updatedPhieucan = await this.phieucanRepository.update(
+      id,
+      updateData
+    );
+    if (!updatedPhieucan) {
+      throw new Error("Hủy phiếu cân thất bại");
+    }
+
+    return updatedPhieucan;
+  }
+}

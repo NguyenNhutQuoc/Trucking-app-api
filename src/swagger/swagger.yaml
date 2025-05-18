@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: Quản Lý Cân Xe API
+  version: 1.0.0
+  description: |
+    API tài liệu cho hệ thống quản lý cân xe.
+
+    Hệ thống này cung cấp API để quản lý việc cân xe, thông tin khách hàng, 
+    hàng hóa và các chức năng liên quan đến quản lý phiếu cân.
+  license:
+    name: Licensed Under MIT
+    url: https://spdx.org/licenses/MIT.html
+  contact:
+    name: Your Name
+    url: https://yourwebsite.com
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+  - url: https://api.example.com/api
+    description: Production server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Authentication
+    description: API xác thực người dùng
+  - name: Phiếu Cân
+    description: API quản lý phiếu cân
+  - name: Hàng Hóa
+    description: API quản lý hàng hóa
+  - name: Khách Hàng
+    description: API quản lý khách hàng
+  - name: Số Xe
+    description: API quản lý số xe
+  - name: Nhóm Quyền
+    description: API quản lý nhóm quyền
+
+paths:
+  # Các paths sẽ được nạp từ các file riêng

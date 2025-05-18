@@ -1,0 +1,59 @@
+Hanghoa:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    id:
+      type: number
+      description: ID tự động tạo của hàng hóa
+    ma:
+      type: string
+      description: Mã hàng hóa
+    ten:
+      type: string
+      description: Tên hàng hóa
+    dongia:
+      type: number
+      description: Đơn giá của hàng hóa
+  example:
+    id: 1
+    ma: "H01"
+    ten: "Cát xây dựng"
+    dongia: 200000
+
+HanghoaCreate:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    ma:
+      type: string
+      description: Mã hàng hóa
+    ten:
+      type: string
+      description: Tên hàng hóa
+    dongia:
+      type: number
+      description: Đơn giá của hàng hóa
+  example:
+    ma: "H01"
+    ten: "Cát xây dựng"
+    dongia: 200000
+
+HanghoaUpdate:
+  type: object
+  properties:
+    ma:
+      type: string
+      description: Mã hàng hóa
+    ten:
+      type: string
+      description: Tên hàng hóa
+    dongia:
+      type: number
+      description: Đơn giá của hàng hóa
+  example:
+    ten: "Cát xây dựng mịn"
+    dongia: 220000

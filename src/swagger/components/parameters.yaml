@@ -1,0 +1,51 @@
+IdPathParam:
+  name: id
+  in: path
+  required: true
+  schema:
+    type: number
+  description: ID của bản ghi
+
+StartDateQueryParam:
+  name: startDate
+  in: query
+  required: true
+  schema:
+    type: string
+    format: date
+  description: Ngày bắt đầu (định dạng YYYY-MM-DD)
+
+EndDateQueryParam:
+  name: endDate
+  in: query
+  required: true
+  schema:
+    type: string
+    format: date
+  description: Ngày kết thúc (định dạng YYYY-MM-DD)
+
+SearchQueryParam:
+  name: search
+  in: query
+  required: false
+  schema:
+    type: string
+  description: Chuỗi tìm kiếm
+
+PageQueryParam:
+  name: page
+  in: query
+  required: false
+  schema:
+    type: integer
+    default: 1
+  description: Số trang
+
+LimitQueryParam:
+  name: limit
+  in: query
+  required: false
+  schema:
+    type: integer
+    default: 10
+  description: Số bản ghi trên mỗi trang

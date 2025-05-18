@@ -1,0 +1,4265 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Quản Lý Cân Xe API",
+    "version": "1.0.0",
+    "description": "API tài liệu cho hệ thống quản lý cân xe.\n\nHệ thống này cung cấp API để quản lý việc cân xe, thông tin khách hàng, \nhàng hóa và các chức năng liên quan đến quản lý phiếu cân.\n",
+    "license": {
+      "name": "Licensed Under MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    "contact": {
+      "name": "Your Name",
+      "url": "https://yourwebsite.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.example.com/api",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Form": {
+        "type": "object",
+        "properties": {
+          "formId": {
+            "type": "number",
+            "description": "ID form"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên form"
+          },
+          "form": {
+            "type": "string",
+            "description": "Tên file form"
+          },
+          "menuname": {
+            "type": "string",
+            "description": "Tên menu"
+          },
+          "vitri": {
+            "type": "string",
+            "description": "Vị trí menu"
+          }
+        },
+        "example": {
+          "formId": 1,
+          "ten": "Thông số hệ thống",
+          "form": "frmCaidat",
+          "menuname": "mnuThongsohethong",
+          "vitri": "danhmuc"
+        }
+      },
+      "Giaotiep": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID giao tiếp"
+          },
+          "tencty": {
+            "type": "string",
+            "description": "Tên công ty"
+          },
+          "diachi": {
+            "type": "string",
+            "description": "Địa chỉ"
+          },
+          "dienthoai": {
+            "type": "string",
+            "description": "Điện thoại"
+          },
+          "nguoican": {
+            "type": "string",
+            "description": "Thông tin người cân"
+          },
+          "chieucaogiay": {
+            "type": "number",
+            "description": "Chiều cao giấy"
+          },
+          "sotrangin": {
+            "type": "number",
+            "description": "Số trang in"
+          },
+          "kieuin": {
+            "type": "string",
+            "description": "Kiểu in"
+          },
+          "cachtrai": {
+            "type": "number",
+            "description": "Cách lề trái"
+          },
+          "cachtren": {
+            "type": "number",
+            "description": "Cách lề trên"
+          },
+          "khogiay": {
+            "type": "number",
+            "description": "Khổ giấy"
+          },
+          "sophieuin": {
+            "type": "number",
+            "description": "Số phiếu in"
+          }
+        },
+        "example": {
+          "id": 1,
+          "tencty": "CÔNG TY TNHH SX TM DV ABC",
+          "diachi": "Địa chỉ:",
+          "dienthoai": "Điện thoại:",
+          "nguoican": "Khách hàng                                                                        Nhân viên bàn cân",
+          "chieucaogiay": 7.5,
+          "sotrangin": 1,
+          "kieuin": "Bằng tay",
+          "cachtrai": 0.3,
+          "cachtren": 0.3,
+          "khogiay": 0,
+          "sophieuin": 1
+        }
+      },
+      "Hanghoa": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID tự động tạo của hàng hóa"
+          },
+          "ma": {
+            "type": "string",
+            "description": "Mã hàng hóa"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên hàng hóa"
+          },
+          "dongia": {
+            "type": "number",
+            "description": "Đơn giá của hàng hóa"
+          }
+        },
+        "example": {
+          "id": 1,
+          "ma": "H01",
+          "ten": "Cát xây dựng",
+          "dongia": 200000
+        }
+      },
+      "HanghoaCreate": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã hàng hóa"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên hàng hóa"
+          },
+          "dongia": {
+            "type": "number",
+            "description": "Đơn giá của hàng hóa"
+          }
+        },
+        "example": {
+          "ma": "H01",
+          "ten": "Cát xây dựng",
+          "dongia": 200000
+        }
+      },
+      "HanghoaUpdate": {
+        "type": "object",
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã hàng hóa"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên hàng hóa"
+          },
+          "dongia": {
+            "type": "number",
+            "description": "Đơn giá của hàng hóa"
+          }
+        },
+        "example": {
+          "ten": "Cát xây dựng mịn",
+          "dongia": 220000
+        }
+      },
+      "Ketnoi": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID kết nối"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên kết nối"
+          },
+          "congcom": {
+            "type": "string",
+            "description": "Cổng COM"
+          },
+          "tocdo": {
+            "type": "string",
+            "description": "Tốc độ"
+          },
+          "databit": {
+            "type": "string",
+            "description": "Data bits"
+          },
+          "parity": {
+            "type": "string",
+            "description": "Parity"
+          },
+          "stopbit": {
+            "type": "string",
+            "description": "Stop bits"
+          },
+          "kytubatdau": {
+            "type": "string",
+            "description": "Ký tự bắt đầu"
+          },
+          "sokytutrongchuoi": {
+            "type": "number",
+            "description": "Số ký tự trong chuỗi"
+          },
+          "chuoinguoc": {
+            "type": "number",
+            "description": "Chuỗi ngược"
+          },
+          "sokytuboqua": {
+            "type": "number",
+            "description": "Số ký tự bỏ qua"
+          }
+        },
+        "example": {
+          "id": 1,
+          "ten": "DAU SO",
+          "congcom": "COM1",
+          "tocdo": "9600",
+          "databit": "8",
+          "parity": "none",
+          "stopbit": "1",
+          "kytubatdau": "=",
+          "sokytutrongchuoi": 6,
+          "chuoinguoc": 1,
+          "sokytuboqua": 1
+        }
+      },
+      "Khachhang": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID tự động tạo của khách hàng"
+          },
+          "ma": {
+            "type": "string",
+            "description": "Mã khách hàng"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên khách hàng"
+          },
+          "diachi": {
+            "type": "string",
+            "description": "Địa chỉ"
+          },
+          "dienthoai": {
+            "type": "string",
+            "description": "Số điện thoại"
+          }
+        },
+        "example": {
+          "id": 1,
+          "ma": "KH001",
+          "ten": "Công ty TNHH ABC",
+          "diachi": "123 Đường ABC, Quận 1, TP.HCM",
+          "dienthoai": "0123456789"
+        }
+      },
+      "KhachhangCreate": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã khách hàng"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên khách hàng"
+          },
+          "diachi": {
+            "type": "string",
+            "description": "Địa chỉ"
+          },
+          "dienthoai": {
+            "type": "string",
+            "description": "Số điện thoại"
+          }
+        },
+        "example": {
+          "ma": "KH001",
+          "ten": "Công ty TNHH ABC",
+          "diachi": "123 Đường ABC, Quận 1, TP.HCM",
+          "dienthoai": "0123456789"
+        }
+      },
+      "KhachhangUpdate": {
+        "type": "object",
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã khách hàng"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên khách hàng"
+          },
+          "diachi": {
+            "type": "string",
+            "description": "Địa chỉ"
+          },
+          "dienthoai": {
+            "type": "string",
+            "description": "Số điện thoại"
+          }
+        },
+        "example": {
+          "ten": "Công ty TNHH ABC (Chi nhánh)",
+          "diachi": "456 Đường XYZ, Quận 2, TP.HCM",
+          "dienthoai": "0987654321"
+        }
+      },
+      "Kiemdinh": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID kiểm định"
+          },
+          "ngayhethan": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Ngày hết hạn"
+          },
+          "songaybaotruoc": {
+            "type": "number",
+            "description": "Số ngày báo trước"
+          },
+          "ngaybaotri": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Ngày bảo trì"
+          },
+          "songaybaotribaotruoc": {
+            "type": "number",
+            "description": "Số ngày báo trước bảo trì"
+          },
+          "noidungbaotri": {
+            "type": "string",
+            "description": "Nội dung bảo trì"
+          },
+          "noidungkhuyenmai": {
+            "type": "string",
+            "description": "Nội dung khuyến mãi"
+          },
+          "temp": {
+            "type": "number",
+            "description": "Temp"
+          }
+        }
+      },
+      "Nhanvien": {
+        "type": "object",
+        "required": [
+          "nvId",
+          "tenNV",
+          "matkhau"
+        ],
+        "properties": {
+          "nvId": {
+            "type": "string",
+            "description": "ID nhân viên (tên đăng nhập)"
+          },
+          "tenNV": {
+            "type": "string",
+            "description": "Tên nhân viên"
+          },
+          "matkhau": {
+            "type": "string",
+            "description": "Mật khẩu"
+          },
+          "trangthai": {
+            "type": "number",
+            "description": "Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)"
+          },
+          "type": {
+            "type": "number",
+            "description": "Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)"
+          },
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          }
+        },
+        "example": {
+          "nvId": "admin",
+          "tenNV": "Admin",
+          "matkhau": "********",
+          "trangthai": 0,
+          "type": 1,
+          "nhomId": 1
+        }
+      },
+      "NhanvienCreate": {
+        "type": "object",
+        "required": [
+          "nvId",
+          "tenNV",
+          "matkhau"
+        ],
+        "properties": {
+          "nvId": {
+            "type": "string",
+            "description": "ID nhân viên (tên đăng nhập)"
+          },
+          "tenNV": {
+            "type": "string",
+            "description": "Tên nhân viên"
+          },
+          "matkhau": {
+            "type": "string",
+            "description": "Mật khẩu"
+          },
+          "trangthai": {
+            "type": "number",
+            "description": "Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)"
+          },
+          "type": {
+            "type": "number",
+            "description": "Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)"
+          },
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          }
+        },
+        "example": {
+          "nvId": "nhanvien1",
+          "tenNV": "Nhân Viên 1",
+          "matkhau": "123456",
+          "trangthai": 0,
+          "type": 0,
+          "nhomId": 4
+        }
+      },
+      "NhanvienUpdate": {
+        "type": "object",
+        "properties": {
+          "tenNV": {
+            "type": "string",
+            "description": "Tên nhân viên"
+          },
+          "matkhau": {
+            "type": "string",
+            "description": "Mật khẩu"
+          },
+          "trangthai": {
+            "type": "number",
+            "description": "Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)"
+          },
+          "type": {
+            "type": "number",
+            "description": "Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)"
+          },
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          }
+        },
+        "example": {
+          "tenNV": "Nhân Viên 1 Update",
+          "trangthai": 0,
+          "nhomId": 5
+        }
+      },
+      "NhanvienWithPermissions": {
+        "type": "object",
+        "properties": {
+          "nvId": {
+            "type": "string",
+            "description": "ID nhân viên (tên đăng nhập)"
+          },
+          "tenNV": {
+            "type": "string",
+            "description": "Tên nhân viên"
+          },
+          "trangthai": {
+            "type": "number",
+            "description": "Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)"
+          },
+          "type": {
+            "type": "number",
+            "description": "Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)"
+          },
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          },
+          "nhomQuyen": {
+            "$ref": "#/components/schemas/NhomQuyen"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Quyen"
+            }
+          }
+        },
+        "example": {
+          "nvId": "admin",
+          "tenNV": "Admin",
+          "trangthai": 0,
+          "type": 1,
+          "nhomId": 1,
+          "nhomQuyen": {
+            "nhomId": 1,
+            "ma": "admin",
+            "ten": "Admin"
+          },
+          "permissions": [
+            {
+              "quyenId": 1,
+              "nhomId": 1,
+              "formId": 1,
+              "form": {
+                "formId": 1,
+                "ten": "Thông số hệ thống"
+              }
+            }
+          ]
+        }
+      },
+      "NhomQuyen": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "nhomId": {
+            "type": "number",
+            "description": "ID tự động tạo của nhóm quyền"
+          },
+          "ma": {
+            "type": "string",
+            "description": "Mã nhóm quyền"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên nhóm quyền"
+          }
+        },
+        "example": {
+          "nhomId": 1,
+          "ma": "admin",
+          "ten": "Admin"
+        }
+      },
+      "NhomQuyenCreate": {
+        "type": "object",
+        "required": [
+          "ma",
+          "ten"
+        ],
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã nhóm quyền"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên nhóm quyền"
+          }
+        },
+        "example": {
+          "ma": "ketoan",
+          "ten": "Kế toán"
+        }
+      },
+      "NhomQuyenUpdate": {
+        "type": "object",
+        "properties": {
+          "ma": {
+            "type": "string",
+            "description": "Mã nhóm quyền"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên nhóm quyền"
+          }
+        },
+        "example": {
+          "ten": "Kế toán trưởng"
+        }
+      },
+      "NhomQuyenWithPermissions": {
+        "type": "object",
+        "properties": {
+          "nhomId": {
+            "type": "number",
+            "description": "ID tự động tạo của nhóm quyền"
+          },
+          "ma": {
+            "type": "string",
+            "description": "Mã nhóm quyền"
+          },
+          "ten": {
+            "type": "string",
+            "description": "Tên nhóm quyền"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Quyen"
+            }
+          }
+        },
+        "example": {
+          "nhomId": 1,
+          "ma": "admin",
+          "ten": "Admin",
+          "permissions": [
+            {
+              "quyenId": 1,
+              "nhomId": 1,
+              "formId": 1,
+              "form": {
+                "formId": 1,
+                "ten": "Thông số hệ thống"
+              }
+            },
+            {
+              "quyenId": 2,
+              "nhomId": 1,
+              "formId": 2,
+              "form": {
+                "formId": 2,
+                "ten": "Danh sách khách hàng"
+              }
+            }
+          ]
+        }
+      },
+      "Phieucan": {
+        "type": "object",
+        "required": [
+          "soxe"
+        ],
+        "properties": {
+          "stt": {
+            "type": "number",
+            "description": "ID tự động tạo của phiếu cân"
+          },
+          "sophieu": {
+            "type": "number",
+            "description": "Số phiếu cân"
+          },
+          "soxe": {
+            "type": "string",
+            "description": "Biển số xe"
+          },
+          "makh": {
+            "type": "string",
+            "description": "Mã khách hàng"
+          },
+          "khachhang": {
+            "type": "string",
+            "description": "Tên khách hàng"
+          },
+          "mahang": {
+            "type": "string",
+            "description": "Mã hàng hóa"
+          },
+          "loaihang": {
+            "type": "string",
+            "description": "Tên loại hàng"
+          },
+          "ngaycan1": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Ngày giờ cân vào"
+          },
+          "ngaycan2": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Ngày giờ cân ra"
+          },
+          "tlcan1": {
+            "type": "number",
+            "description": "Trọng lượng cân vào (kg)"
+          },
+          "tlcan2": {
+            "type": "number",
+            "description": "Trọng lượng cân ra (kg)"
+          },
+          "xuatnhap": {
+            "type": "string",
+            "description": "Loại xuất nhập"
+          },
+          "ghichu": {
+            "type": "string",
+            "description": "Ghi chú"
+          },
+          "nhanvien": {
+            "type": "string",
+            "description": "Nhân viên thực hiện"
+          },
+          "kho": {
+            "type": "string",
+            "description": "Kho"
+          },
+          "sochungtu": {
+            "type": "string",
+            "description": "Số chứng từ"
+          },
+          "uploadStatus": {
+            "type": "number",
+            "description": "Trạng thái upload (0 = bình thường, 1 = đã hủy)"
+          }
+        },
+        "example": {
+          "stt": 1,
+          "sophieu": 1,
+          "soxe": "51F-12345",
+          "makh": "k01",
+          "khachhang": "Khách hàng A",
+          "mahang": "H01",
+          "loaihang": "Cát xây dựng",
+          "ngaycan1": "2025-05-16T08:30:00Z",
+          "ngaycan2": "2025-05-16T09:15:00Z",
+          "tlcan1": 42560,
+          "tlcan2": 18000,
+          "xuatnhap": "Xuất",
+          "ghichu": "Hàng ok",
+          "nhanvien": "admin",
+          "kho": "Kho 1",
+          "sochungtu": "CT001",
+          "uploadStatus": 0
+        }
+      },
+      "PhieucanCreate": {
+        "type": "object",
+        "required": [
+          "soxe"
+        ],
+        "properties": {
+          "sophieu": {
+            "type": "number",
+            "description": "Số phiếu cân (tự động tạo nếu không cung cấp)"
+          },
+          "soxe": {
+            "type": "string",
+            "description": "Biển số xe"
+          },
+          "makh": {
+            "type": "string",
+            "description": "Mã khách hàng"
+          },
+          "khachhang": {
+            "type": "string",
+            "description": "Tên khách hàng"
+          },
+          "mahang": {
+            "type": "string",
+            "description": "Mã hàng hóa"
+          },
+          "loaihang": {
+            "type": "string",
+            "description": "Tên loại hàng"
+          },
+          "tlcan1": {
+            "type": "number",
+            "description": "Trọng lượng cân vào (kg)"
+          },
+          "xuatnhap": {
+            "type": "string",
+            "description": "Loại xuất nhập"
+          },
+          "ghichu": {
+            "type": "string",
+            "description": "Ghi chú"
+          },
+          "kho": {
+            "type": "string",
+            "description": "Kho"
+          },
+          "sochungtu": {
+            "type": "string",
+            "description": "Số chứng từ"
+          }
+        },
+        "example": {
+          "soxe": "51F-12345",
+          "makh": "k01",
+          "khachhang": "Khách hàng A",
+          "mahang": "H01",
+          "loaihang": "Cát xây dựng",
+          "tlcan1": 42560,
+          "xuatnhap": "Xuất",
+          "ghichu": "Hàng ok",
+          "kho": "Kho 1",
+          "sochungtu": "CT001"
+        }
+      },
+      "PhieucanComplete": {
+        "type": "object",
+        "required": [
+          "tlcan2"
+        ],
+        "properties": {
+          "tlcan2": {
+            "type": "number",
+            "description": "Trọng lượng cân ra (kg)"
+          },
+          "ngaycan2": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Ngày giờ cân ra (mặc định là thời gian hiện tại)"
+          }
+        },
+        "example": {
+          "tlcan2": 18000,
+          "ngaycan2": "2025-05-16T09:15:00Z"
+        }
+      },
+      "PhieucanCancel": {
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Lý do hủy phiếu cân"
+          }
+        },
+        "example": {
+          "reason": "Hủy do nhập sai thông tin"
+        }
+      },
+      "PhieucanStatistics": {
+        "type": "object",
+        "properties": {
+          "totalVehicles": {
+            "type": "number",
+            "description": "Tổng số xe"
+          },
+          "totalWeight": {
+            "type": "number",
+            "description": "Tổng trọng lượng (kg)"
+          },
+          "byCompany": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "companyName": {
+                  "type": "string"
+                },
+                "weighCount": {
+                  "type": "number"
+                },
+                "totalWeight": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "byProduct": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string"
+                },
+                "weighCount": {
+                  "type": "number"
+                },
+                "totalWeight": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "byVehicle": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "vehicleNumber": {
+                  "type": "string"
+                },
+                "weighCount": {
+                  "type": "number"
+                },
+                "totalWeight": {
+                  "type": "number"
+                },
+                "averageWeight": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "byDay": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "weighCount": {
+                  "type": "number"
+                },
+                "totalWeight": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "totalVehicles": 156,
+          "totalWeight": 485200,
+          "byCompany": [
+            {
+              "companyName": "Công ty XYZ",
+              "weighCount": 42,
+              "totalWeight": 35400
+            }
+          ],
+          "byProduct": [
+            {
+              "productName": "Cát xây dựng",
+              "weighCount": 52,
+              "totalWeight": 169800
+            }
+          ],
+          "byVehicle": [
+            {
+              "vehicleNumber": "51F-12345",
+              "weighCount": 12,
+              "totalWeight": 35400,
+              "averageWeight": 2950
+            }
+          ],
+          "byDay": [
+            {
+              "date": "2025-05-16",
+              "weighCount": 28,
+              "totalWeight": 92300
+            }
+          ]
+        }
+      },
+      "Quyen": {
+        "type": "object",
+        "required": [
+          "nhomId",
+          "formId"
+        ],
+        "properties": {
+          "quyenId": {
+            "type": "number",
+            "description": "ID tự động tạo của quyền"
+          },
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          },
+          "formId": {
+            "type": "number",
+            "description": "ID form"
+          },
+          "nhomQuyen": {
+            "$ref": "#/components/schemas/NhomQuyen"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "example": {
+          "quyenId": 1,
+          "nhomId": 1,
+          "formId": 1,
+          "form": {
+            "formId": 1,
+            "ten": "Thông số hệ thống"
+          }
+        }
+      },
+      "QuyenCreate": {
+        "type": "object",
+        "required": [
+          "nhomId",
+          "formId"
+        ],
+        "properties": {
+          "nhomId": {
+            "type": "number",
+            "description": "ID nhóm quyền"
+          },
+          "formId": {
+            "type": "number",
+            "description": "ID form"
+          }
+        },
+        "example": {
+          "nhomId": 1,
+          "formId": 1
+        }
+      },
+      "Soxe": {
+        "type": "object",
+        "required": [
+          "soxe"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID tự động tạo của số xe"
+          },
+          "soxe": {
+            "type": "string",
+            "description": "Biển số xe"
+          },
+          "trongluong": {
+            "type": "number",
+            "description": "Trọng lượng xe (kg)"
+          }
+        },
+        "example": {
+          "id": 1,
+          "soxe": "51F-12345",
+          "trongluong": 15000
+        }
+      },
+      "SoxeCreate": {
+        "type": "object",
+        "required": [
+          "soxe"
+        ],
+        "properties": {
+          "soxe": {
+            "type": "string",
+            "description": "Biển số xe"
+          },
+          "trongluong": {
+            "type": "number",
+            "description": "Trọng lượng xe (kg)"
+          }
+        },
+        "example": {
+          "soxe": "51F-12345",
+          "trongluong": 15000
+        }
+      },
+      "SoxeUpdate": {
+        "type": "object",
+        "properties": {
+          "soxe": {
+            "type": "string",
+            "description": "Biển số xe"
+          },
+          "trongluong": {
+            "type": "number",
+            "description": "Trọng lượng xe (kg)"
+          }
+        },
+        "example": {
+          "trongluong": 16000
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "API xác thực người dùng"
+    },
+    {
+      "name": "Phiếu Cân",
+      "description": "API quản lý phiếu cân"
+    },
+    {
+      "name": "Hàng Hóa",
+      "description": "API quản lý hàng hóa"
+    },
+    {
+      "name": "Khách Hàng",
+      "description": "API quản lý khách hàng"
+    },
+    {
+      "name": "Số Xe",
+      "description": "API quản lý số xe"
+    },
+    {
+      "name": "Nhóm Quyền",
+      "description": "API quản lý nhóm quyền"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Đăng nhập vào hệ thống",
+        "description": "Đăng nhập bằng tên đăng nhập và mật khẩu",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Tên đăng nhập"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Mật khẩu"
+                  }
+                },
+                "example": {
+                  "username": "admin",
+                  "password": "password123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Đăng nhập thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Đăng nhập thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "description": "JWT token"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "nvId": {
+                              "type": "string"
+                            },
+                            "tenNV": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "number"
+                            },
+                            "nhomId": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/validate-token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Kiểm tra tính hợp lệ của token",
+        "description": "Kiểm tra xem token hiện tại có hợp lệ hay không",
+        "operationId": "validateToken",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token hợp lệ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token hợp lệ"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "valid": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Đổi mật khẩu",
+        "description": "Đổi mật khẩu của người dùng hiện tại",
+        "operationId": "changePassword",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "description": "Mật khẩu hiện tại"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "Mật khẩu mới"
+                  }
+                },
+                "example": {
+                  "currentPassword": "password123",
+                  "newPassword": "newpassword456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Đổi mật khẩu thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Đổi mật khẩu thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/permissions": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Lấy quyền của người dùng",
+        "description": "Lấy danh sách quyền của người dùng hiện tại",
+        "operationId": "getUserPermissions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách quyền",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Quyền người dùng"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Quyen"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/hanghoa": {
+      "get": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Lấy danh sách hàng hóa",
+        "description": "Lấy toàn bộ danh sách hàng hóa trong hệ thống",
+        "operationId": "getAllHanghoas",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách hàng hóa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách hàng hóa"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Hanghoa"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Tạo hàng hóa mới",
+        "description": "Tạo một mặt hàng mới trong hệ thống",
+        "operationId": "createHanghoa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HanghoaCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo hàng hóa thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo hàng hóa thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Hanghoa"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/hanghoa/search": {
+      "get": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Tìm kiếm hàng hóa theo tên",
+        "description": "Tìm kiếm hàng hóa theo tên hoặc trả về tất cả nếu không có từ khóa",
+        "operationId": "searchHanghoaByName",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Từ khóa tìm kiếm tên hàng hóa"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Kết quả tìm kiếm",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Kết quả tìm kiếm"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Hanghoa"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/hanghoa/{id}": {
+      "get": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Lấy thông tin hàng hóa theo ID",
+        "description": "Lấy chi tiết một hàng hóa dựa trên ID",
+        "operationId": "getHanghoaById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết hàng hóa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết hàng hóa"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Hanghoa"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Cập nhật hàng hóa",
+        "description": "Cập nhật thông tin hàng hóa dựa trên ID",
+        "operationId": "updateHanghoa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HanghoaUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật hàng hóa thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật hàng hóa thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Hanghoa"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Xóa hàng hóa",
+        "description": "Xóa một hàng hóa dựa trên ID",
+        "operationId": "deleteHanghoa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa hàng hóa thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa hàng hóa thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/hanghoa/code/{ma}": {
+      "get": {
+        "tags": [
+          "Hàng Hóa"
+        ],
+        "summary": "Lấy thông tin hàng hóa theo mã",
+        "description": "Lấy chi tiết một hàng hóa dựa trên mã",
+        "operationId": "getHanghoaByMa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Mã hàng hóa"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết hàng hóa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết hàng hóa"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Hanghoa"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/khachhang": {
+      "get": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Lấy danh sách khách hàng",
+        "description": "Lấy toàn bộ danh sách khách hàng trong hệ thống",
+        "operationId": "getAllKhachhangs",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách khách hàng"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Khachhang"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Tạo khách hàng mới",
+        "description": "Tạo một khách hàng mới trong hệ thống",
+        "operationId": "createKhachhang",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KhachhangCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo khách hàng thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo khách hàng thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Khachhang"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/khachhang/search": {
+      "get": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Tìm kiếm khách hàng theo tên",
+        "description": "Tìm kiếm khách hàng theo tên hoặc trả về tất cả nếu không có từ khóa",
+        "operationId": "searchKhachhangByName",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Từ khóa tìm kiếm tên khách hàng"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Kết quả tìm kiếm",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Kết quả tìm kiếm"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Khachhang"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/khachhang/{id}": {
+      "get": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Lấy thông tin khách hàng theo ID",
+        "description": "Lấy chi tiết một khách hàng dựa trên ID",
+        "operationId": "getKhachhangById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết khách hàng"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Khachhang"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Cập nhật khách hàng",
+        "description": "Cập nhật thông tin khách hàng dựa trên ID",
+        "operationId": "updateKhachhang",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KhachhangUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật khách hàng thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật khách hàng thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Khachhang"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Xóa khách hàng",
+        "description": "Xóa một khách hàng dựa trên ID",
+        "operationId": "deleteKhachhang",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa khách hàng thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa khách hàng thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/khachhang/code/{ma}": {
+      "get": {
+        "tags": [
+          "Khách Hàng"
+        ],
+        "summary": "Lấy thông tin khách hàng theo mã",
+        "description": "Lấy chi tiết một khách hàng dựa trên mã",
+        "operationId": "getKhachhangByMa",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Mã khách hàng"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết khách hàng"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Khachhang"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/nhanvien": {
+      "get": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Lấy danh sách nhân viên",
+        "description": "Lấy toàn bộ danh sách nhân viên trong hệ thống",
+        "operationId": "getAllNhanviens",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách nhân viên",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách nhân viên"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Nhanvien"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Tạo nhân viên mới",
+        "description": "Tạo một nhân viên mới trong hệ thống",
+        "operationId": "createNhanvien",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhanvienCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo nhân viên thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo nhân viên thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Nhanvien"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/nhanvien/{id}": {
+      "get": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Lấy thông tin nhân viên theo ID",
+        "description": "Lấy chi tiết một nhân viên dựa trên ID",
+        "operationId": "getNhanvienById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID nhân viên"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết nhân viên",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết nhân viên"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Nhanvien"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin hoặc chính nhân viên đó)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Cập nhật nhân viên",
+        "description": "Cập nhật thông tin nhân viên dựa trên ID",
+        "operationId": "updateNhanvien",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID nhân viên"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhanvienUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật nhân viên thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật nhân viên thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Nhanvien"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Xóa nhân viên",
+        "description": "Xóa một nhân viên dựa trên ID",
+        "operationId": "deleteNhanvien",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID nhân viên"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa nhân viên thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa nhân viên thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/nhanvien/{id}/permissions": {
+      "get": {
+        "tags": [
+          "Nhân Viên"
+        ],
+        "summary": "Lấy danh sách quyền của nhân viên",
+        "description": "Lấy chi tiết quyền của một nhân viên dựa trên ID",
+        "operationId": "getNhanvienPermissions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID nhân viên"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách quyền của nhân viên",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách quyền của nhân viên"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/NhanvienWithPermissions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/nhomquyen/{nhomId}/permissions/{formId}": {
+      "post": {
+        "tags": [
+          "Nhóm Quyền"
+        ],
+        "summary": "Thêm quyền vào nhóm quyền",
+        "description": "Thêm một quyền (form) vào nhóm quyền",
+        "operationId": "addPermissionToGroup",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "nhomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID nhóm quyền"
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID form (quyền)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thêm quyền thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Thêm quyền thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Quyen"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Nhóm Quyền"
+        ],
+        "summary": "Xóa quyền khỏi nhóm quyền",
+        "description": "Xóa một quyền (form) khỏi nhóm quyền",
+        "operationId": "removePermissionFromGroup",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "nhomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID nhóm quyền"
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID form (quyền)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa quyền thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa quyền thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/nhomquyen/{nhomId}/permissions": {
+      "put": {
+        "tags": [
+          "Nhóm Quyền"
+        ],
+        "summary": "Cập nhật danh sách quyền của nhóm",
+        "description": "Cập nhật toàn bộ danh sách quyền của một nhóm quyền",
+        "operationId": "updateGroupPermissions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "nhomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID nhóm quyền"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "formIds"
+                ],
+                "properties": {
+                  "formIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "Danh sách ID của các form (quyền)"
+                  }
+                },
+                "example": {
+                  "formIds": [
+                    1,
+                    2,
+                    3,
+                    5,
+                    8
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật quyền thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật quyền thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền truy cập (Chỉ admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Không có quyền truy cập"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân",
+        "description": "Lấy toàn bộ danh sách phiếu cân trong hệ thống",
+        "operationId": "getAllPhieucans",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Tạo phiếu cân mới",
+        "description": "Tạo một phiếu cân mới trong hệ thống",
+        "operationId": "createPhieucan",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhieucanCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo phiếu cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo phiếu cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Phieucan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/{id}": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy thông tin phiếu cân theo ID",
+        "description": "Lấy chi tiết một phiếu cân dựa trên ID",
+        "operationId": "getPhieucanById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết phiếu cân",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết phiếu cân"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Phieucan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Cập nhật phiếu cân",
+        "description": "Cập nhật thông tin phiếu cân dựa trên ID",
+        "operationId": "updatePhieucan",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sophieu": {
+                    "type": "number"
+                  },
+                  "soxe": {
+                    "type": "string"
+                  },
+                  "makh": {
+                    "type": "string"
+                  },
+                  "khachhang": {
+                    "type": "string"
+                  },
+                  "mahang": {
+                    "type": "string"
+                  },
+                  "loaihang": {
+                    "type": "string"
+                  },
+                  "tlcan1": {
+                    "type": "number"
+                  },
+                  "xuatnhap": {
+                    "type": "string"
+                  },
+                  "ghichu": {
+                    "type": "string"
+                  },
+                  "kho": {
+                    "type": "string"
+                  },
+                  "sochungtu": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "soxe": "51F-12345",
+                  "ghichu": "Cập nhật ghi chú",
+                  "kho": "Kho 2"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật phiếu cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật phiếu cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Phieucan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Xóa phiếu cân",
+        "description": "Xóa một phiếu cân dựa trên ID",
+        "operationId": "deletePhieucan",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa phiếu cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa phiếu cân thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/{id}/complete": {
+      "post": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Hoàn thành cân",
+        "description": "Cập nhật trọng lượng cân ra để hoàn thành phiếu cân",
+        "operationId": "completeWeighing",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhieucanComplete"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hoàn thành cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Hoàn thành cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Phieucan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/{id}/cancel": {
+      "post": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Hủy phiếu cân",
+        "description": "Hủy phiếu cân với lý do",
+        "operationId": "cancelPhieucan",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhieucanCancel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hủy phiếu cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Hủy phiếu cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Phieucan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/status/completed": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân đã hoàn thành",
+        "description": "Lấy danh sách phiếu cân đã hoàn thành (đã cân ra)",
+        "operationId": "getCompletedWeighings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân đã hoàn thành",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân đã hoàn thành"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/status/pending": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân đang chờ",
+        "description": "Lấy danh sách phiếu cân đang chờ (chưa cân ra)",
+        "operationId": "getPendingWeighings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân đang chờ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân đang chờ"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/status/canceled": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân đã hủy",
+        "description": "Lấy danh sách phiếu cân đã hủy",
+        "operationId": "getCanceledWeighings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân đã hủy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân đã hủy"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/date-range/search": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân theo khoảng thời gian",
+        "description": "Lấy danh sách phiếu cân trong một khoảng thời gian",
+        "operationId": "getPhieucansByDateRange",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/StartDateQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/EndDateQueryParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân theo khoảng thời gian",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân theo khoảng thời gian"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/vehicle/{soxe}": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân theo biển số xe",
+        "description": "Lấy danh sách phiếu cân của một biển số xe cụ thể",
+        "operationId": "getPhieucansBySoxe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "soxe",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Biển số xe"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân theo xe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân của xe"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/product/{mahang}": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân theo mã hàng",
+        "description": "Lấy danh sách phiếu cân của một loại hàng hóa cụ thể",
+        "operationId": "getPhieucansByProduct",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "mahang",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Mã hàng hóa"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân theo hàng hóa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân của loại hàng"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/customer/{makh}": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Lấy danh sách phiếu cân theo mã khách hàng",
+        "description": "Lấy danh sách phiếu cân của một khách hàng cụ thể",
+        "operationId": "getPhieucansByCustomer",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "makh",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Mã khách hàng"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách phiếu cân theo khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách phiếu cân của khách hàng"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Phieucan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/statistics/today": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Thống kê phiếu cân trong ngày",
+        "description": "Lấy thống kê về phiếu cân trong ngày hôm nay",
+        "operationId": "getTodayStatistics",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thống kê phiếu cân trong ngày",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Thống kê hôm nay"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PhieucanStatistics"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/phieucan/statistics/weight": {
+      "get": {
+        "tags": [
+          "Phiếu Cân"
+        ],
+        "summary": "Thống kê trọng lượng theo khoảng thời gian",
+        "description": "Lấy thống kê trọng lượng phiếu cân trong một khoảng thời gian",
+        "operationId": "getWeightStatistics",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/StartDateQueryParam"
+          },
+          {
+            "$ref": "#/components/parameters/EndDateQueryParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thống kê trọng lượng theo khoảng thời gian",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Thống kê cân theo khoảng thời gian"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PhieucanStatistics"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/soxe": {
+      "get": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Lấy danh sách số xe",
+        "description": "Lấy toàn bộ danh sách số xe trong hệ thống",
+        "operationId": "getAllSoxes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách số xe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách số xe"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Soxe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Tạo số xe mới",
+        "description": "Tạo một số xe mới trong hệ thống",
+        "operationId": "createSoxe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoxeCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo số xe thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo số xe thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Soxe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/soxe/{id}": {
+      "get": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Lấy thông tin số xe theo ID",
+        "description": "Lấy chi tiết một số xe dựa trên ID",
+        "operationId": "getSoxeById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết số xe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết số xe"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Soxe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Cập nhật số xe",
+        "description": "Cập nhật thông tin số xe dựa trên ID",
+        "operationId": "updateSoxe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoxeUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật số xe thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật số xe thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Soxe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Xóa số xe",
+        "description": "Xóa một số xe dựa trên ID",
+        "operationId": "deleteSoxe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPathParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa số xe thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa số xe thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/soxe/number/{soxe}": {
+      "get": {
+        "tags": [
+          "Số Xe"
+        ],
+        "summary": "Lấy thông tin số xe theo biển số",
+        "description": "Lấy chi tiết một số xe dựa trên biển số",
+        "operationId": "getSoxeBySoxe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "soxe",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Biển số xe"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết số xe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết số xe"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Soxe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,229 @@
+Phieucan:
+  type: object
+  required:
+    - soxe
+  properties:
+    stt:
+      type: number
+      description: ID tự động tạo của phiếu cân
+    sophieu:
+      type: number
+      description: Số phiếu cân
+    soxe:
+      type: string
+      description: Biển số xe
+    makh:
+      type: string
+      description: Mã khách hàng
+    khachhang:
+      type: string
+      description: Tên khách hàng
+    mahang:
+      type: string
+      description: Mã hàng hóa
+    loaihang:
+      type: string
+      description: Tên loại hàng
+    ngaycan1:
+      type: string
+      format: date-time
+      description: Ngày giờ cân vào
+    ngaycan2:
+      type: string
+      format: date-time
+      description: Ngày giờ cân ra
+    tlcan1:
+      type: number
+      description: Trọng lượng cân vào (kg)
+    tlcan2:
+      type: number
+      description: Trọng lượng cân ra (kg)
+    xuatnhap:
+      type: string
+      description: Loại xuất nhập
+    ghichu:
+      type: string
+      description: Ghi chú
+    nhanvien:
+      type: string
+      description: Nhân viên thực hiện
+    kho:
+      type: string
+      description: Kho
+    sochungtu:
+      type: string
+      description: Số chứng từ
+    uploadStatus:
+      type: number
+      description: Trạng thái upload (0 = bình thường, 1 = đã hủy)
+  example:
+    stt: 1
+    sophieu: 1
+    soxe: "51F-12345"
+    makh: "k01"
+    khachhang: "Khách hàng A"
+    mahang: "H01"
+    loaihang: "Cát xây dựng"
+    ngaycan1: "2025-05-16T08:30:00Z"
+    ngaycan2: "2025-05-16T09:15:00Z"
+    tlcan1: 42560
+    tlcan2: 18000
+    xuatnhap: "Xuất"
+    ghichu: "Hàng ok"
+    nhanvien: "admin"
+    kho: "Kho 1"
+    sochungtu: "CT001"
+    uploadStatus: 0
+
+PhieucanCreate:
+  type: object
+  required:
+    - soxe
+  properties:
+    sophieu:
+      type: number
+      description: Số phiếu cân (tự động tạo nếu không cung cấp)
+    soxe:
+      type: string
+      description: Biển số xe
+    makh:
+      type: string
+      description: Mã khách hàng
+    khachhang:
+      type: string
+      description: Tên khách hàng
+    mahang:
+      type: string
+      description: Mã hàng hóa
+    loaihang:
+      type: string
+      description: Tên loại hàng
+    tlcan1:
+      type: number
+      description: Trọng lượng cân vào (kg)
+    xuatnhap:
+      type: string
+      description: Loại xuất nhập
+    ghichu:
+      type: string
+      description: Ghi chú
+    kho:
+      type: string
+      description: Kho
+    sochungtu:
+      type: string
+      description: Số chứng từ
+  example:
+    soxe: "51F-12345"
+    makh: "k01"
+    khachhang: "Khách hàng A"
+    mahang: "H01"
+    loaihang: "Cát xây dựng"
+    tlcan1: 42560
+    xuatnhap: "Xuất"
+    ghichu: "Hàng ok"
+    kho: "Kho 1"
+    sochungtu: "CT001"
+
+PhieucanComplete:
+  type: object
+  required:
+    - tlcan2
+  properties:
+    tlcan2:
+      type: number
+      description: Trọng lượng cân ra (kg)
+    ngaycan2:
+      type: string
+      format: date-time
+      description: Ngày giờ cân ra (mặc định là thời gian hiện tại)
+  example:
+    tlcan2: 18000
+    ngaycan2: "2025-05-16T09:15:00Z"
+
+PhieucanCancel:
+  type: object
+  required:
+    - reason
+  properties:
+    reason:
+      type: string
+      description: Lý do hủy phiếu cân
+  example:
+    reason: "Hủy do nhập sai thông tin"
+
+PhieucanStatistics:
+  type: object
+  properties:
+    totalVehicles:
+      type: number
+      description: Tổng số xe
+    totalWeight:
+      type: number
+      description: Tổng trọng lượng (kg)
+    byCompany:
+      type: array
+      items:
+        type: object
+        properties:
+          companyName:
+            type: string
+          weighCount:
+            type: number
+          totalWeight:
+            type: number
+    byProduct:
+      type: array
+      items:
+        type: object
+        properties:
+          productName:
+            type: string
+          weighCount:
+            type: number
+          totalWeight:
+            type: number
+    byVehicle:
+      type: array
+      items:
+        type: object
+        properties:
+          vehicleNumber:
+            type: string
+          weighCount:
+            type: number
+          totalWeight:
+            type: number
+          averageWeight:
+            type: number
+    byDay:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+          weighCount:
+            type: number
+          totalWeight:
+            type: number
+  example:
+    totalVehicles: 156
+    totalWeight: 485200
+    byCompany:
+      - companyName: "Công ty XYZ"
+        weighCount: 42
+        totalWeight: 35400
+    byProduct:
+      - productName: "Cát xây dựng"
+        weighCount: 52
+        totalWeight: 169800
+    byVehicle:
+      - vehicleNumber: "51F-12345"
+        weighCount: 12
+        totalWeight: 35400
+        averageWeight: 2950
+    byDay:
+      - date: "2025-05-16"
+        weighCount: 28
+        totalWeight: 92300

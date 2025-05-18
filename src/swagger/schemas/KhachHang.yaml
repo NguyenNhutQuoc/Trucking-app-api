@@ -1,0 +1,71 @@
+Khachhang:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    id:
+      type: number
+      description: ID tự động tạo của khách hàng
+    ma:
+      type: string
+      description: Mã khách hàng
+    ten:
+      type: string
+      description: Tên khách hàng
+    diachi:
+      type: string
+      description: Địa chỉ
+    dienthoai:
+      type: string
+      description: Số điện thoại
+  example:
+    id: 1
+    ma: "KH001"
+    ten: "Công ty TNHH ABC"
+    diachi: "123 Đường ABC, Quận 1, TP.HCM"
+    dienthoai: "0123456789"
+
+KhachhangCreate:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    ma:
+      type: string
+      description: Mã khách hàng
+    ten:
+      type: string
+      description: Tên khách hàng
+    diachi:
+      type: string
+      description: Địa chỉ
+    dienthoai:
+      type: string
+      description: Số điện thoại
+  example:
+    ma: "KH001"
+    ten: "Công ty TNHH ABC"
+    diachi: "123 Đường ABC, Quận 1, TP.HCM"
+    dienthoai: "0123456789"
+
+KhachhangUpdate:
+  type: object
+  properties:
+    ma:
+      type: string
+      description: Mã khách hàng
+    ten:
+      type: string
+      description: Tên khách hàng
+    diachi:
+      type: string
+      description: Địa chỉ
+    dienthoai:
+      type: string
+      description: Số điện thoại
+  example:
+    ten: "Công ty TNHH ABC (Chi nhánh)"
+    diachi: "456 Đường XYZ, Quận 2, TP.HCM"
+    dienthoai: "0987654321"

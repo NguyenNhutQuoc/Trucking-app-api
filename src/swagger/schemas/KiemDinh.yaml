@@ -1,0 +1,29 @@
+Kiemdinh:
+  type: object
+  properties:
+    id:
+      type: number
+      description: ID kiểm định
+    ngayhethan:
+      type: string
+      format: date-time
+      description: Ngày hết hạn
+    songaybaotruoc:
+      type: number
+      description: Số ngày báo trước
+    ngaybaotri:
+      type: string
+      format: date-time
+      description: Ngày bảo trì
+    songaybaotribaotruoc:
+      type: number
+      description: Số ngày báo trước bảo trì
+    noidungbaotri:
+      type: string
+      description: Nội dung bảo trì
+    noidungkhuyenmai:
+      type: string
+      description: Nội dung khuyến mãi
+    temp:
+      type: number
+      description: Temp

@@ -1,0 +1,52 @@
+Giaotiep:
+  type: object
+  properties:
+    id:
+      type: number
+      description: ID giao tiếp
+    tencty:
+      type: string
+      description: Tên công ty
+    diachi:
+      type: string
+      description: Địa chỉ
+    dienthoai:
+      type: string
+      description: Điện thoại
+    nguoican:
+      type: string
+      description: Thông tin người cân
+    chieucaogiay:
+      type: number
+      description: Chiều cao giấy
+    sotrangin:
+      type: number
+      description: Số trang in
+    kieuin:
+      type: string
+      description: Kiểu in
+    cachtrai:
+      type: number
+      description: Cách lề trái
+    cachtren:
+      type: number
+      description: Cách lề trên
+    khogiay:
+      type: number
+      description: Khổ giấy
+    sophieuin:
+      type: number
+      description: Số phiếu in
+  example:
+    id: 1
+    tencty: "CÔNG TY TNHH SX TM DV ABC"
+    diachi: "Địa chỉ:"
+    dienthoai: "Điện thoại:"
+    nguoican: "Khách hàng                                                                        Nhân viên bàn cân"
+    chieucaogiay: 7.5
+    sotrangin: 1
+    kieuin: "Bằng tay"
+    cachtrai: 0.3
+    cachtren: 0.3
+    khogiay: 0
+    sophieuin: 1

@@ -1,0 +1,87 @@
+SuccessResponse:
+  description: Thao tác thành công
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: true
+          message:
+            type: string
+          data:
+            type: object
+
+ListSuccessResponse:
+  description: Thao tác lấy danh sách thành công
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: true
+          message:
+            type: string
+          data:
+            type: array
+            items:
+              type: object
+
+ValidationError:
+  description: Dữ liệu không hợp lệ
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: false
+          message:
+            type: string
+            example: Dữ liệu không hợp lệ
+
+UnauthorizedError:
+  description: Không có quyền truy cập
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: false
+          message:
+            type: string
+            example: Không có quyền truy cập
+
+NotFoundError:
+  description: Không tìm thấy dữ liệu
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: false
+          message:
+            type: string
+            example: Không tìm thấy dữ liệu
+
+InternalServerError:
+  description: Lỗi máy chủ
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: false
+          message:
+            type: string
+            example: Lỗi máy chủ nội bộ

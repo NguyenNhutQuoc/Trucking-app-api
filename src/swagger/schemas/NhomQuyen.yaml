@@ -1,0 +1,81 @@
+NhomQuyen:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    nhomId:
+      type: number
+      description: ID tự động tạo của nhóm quyền
+    ma:
+      type: string
+      description: Mã nhóm quyền
+    ten:
+      type: string
+      description: Tên nhóm quyền
+  example:
+    nhomId: 1
+    ma: "admin"
+    ten: "Admin"
+
+NhomQuyenCreate:
+  type: object
+  required:
+    - ma
+    - ten
+  properties:
+    ma:
+      type: string
+      description: Mã nhóm quyền
+    ten:
+      type: string
+      description: Tên nhóm quyền
+  example:
+    ma: "ketoan"
+    ten: "Kế toán"
+
+NhomQuyenUpdate:
+  type: object
+  properties:
+    ma:
+      type: string
+      description: Mã nhóm quyền
+    ten:
+      type: string
+      description: Tên nhóm quyền
+  example:
+    ten: "Kế toán trưởng"
+
+NhomQuyenWithPermissions:
+  type: object
+  properties:
+    nhomId:
+      type: number
+      description: ID tự động tạo của nhóm quyền
+    ma:
+      type: string
+      description: Mã nhóm quyền
+    ten:
+      type: string
+      description: Tên nhóm quyền
+    permissions:
+      type: array
+      items:
+        $ref: "#/components/schemas/Quyen"
+  example:
+    nhomId: 1
+    ma: "admin"
+    ten: "Admin"
+    permissions:
+      - quyenId: 1
+        nhomId: 1
+        formId: 1
+        form:
+          formId: 1
+          ten: "Thông số hệ thống"
+      - quyenId: 2
+        nhomId: 1
+        formId: 2
+        form:
+          formId: 2
+          ten: "Danh sách khách hàng"

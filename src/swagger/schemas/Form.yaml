@@ -1,0 +1,24 @@
+Form:
+  type: object
+  properties:
+    formId:
+      type: number
+      description: ID form
+    ten:
+      type: string
+      description: Tên form
+    form:
+      type: string
+      description: Tên file form
+    menuname:
+      type: string
+      description: Tên menu
+    vitri:
+      type: string
+      description: Vị trí menu
+  example:
+    formId: 1
+    ten: "Thông số hệ thống"
+    form: "frmCaidat"
+    menuname: "mnuThongsohethong"
+    vitri: "danhmuc"

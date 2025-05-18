@@ -1,0 +1,45 @@
+Soxe:
+  type: object
+  required:
+    - soxe
+  properties:
+    id:
+      type: number
+      description: ID tự động tạo của số xe
+    soxe:
+      type: string
+      description: Biển số xe
+    trongluong:
+      type: number
+      description: Trọng lượng xe (kg)
+  example:
+    id: 1
+    soxe: "51F-12345"
+    trongluong: 15000
+
+SoxeCreate:
+  type: object
+  required:
+    - soxe
+  properties:
+    soxe:
+      type: string
+      description: Biển số xe
+    trongluong:
+      type: number
+      description: Trọng lượng xe (kg)
+  example:
+    soxe: "51F-12345"
+    trongluong: 15000
+
+SoxeUpdate:
+  type: object
+  properties:
+    soxe:
+      type: string
+      description: Biển số xe
+    trongluong:
+      type: number
+      description: Trọng lượng xe (kg)
+  example:
+    trongluong: 16000

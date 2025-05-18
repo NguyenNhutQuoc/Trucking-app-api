@@ -1,0 +1,180 @@
+/auth/login:
+  post:
+    tags:
+      - Authentication
+    summary: Đăng nhập vào hệ thống
+    description: Đăng nhập bằng tên đăng nhập và mật khẩu
+    operationId: login
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+                description: Tên đăng nhập
+              password:
+                type: string
+                description: Mật khẩu
+            example:
+              username: "admin"
+              password: "password123"
+    responses:
+      200:
+        description: Đăng nhập thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Đăng nhập thành công"
+                data:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: JWT token
+                    user:
+                      type: object
+                      properties:
+                        nvId:
+                          type: string
+                        tenNV:
+                          type: string
+                        type:
+                          type: number
+                        nhomId:
+                          type: number
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/auth/validate-token:
+  post:
+    tags:
+      - Authentication
+    summary: Kiểm tra tính hợp lệ của token
+    description: Kiểm tra xem token hiện tại có hợp lệ hay không
+    operationId: validateToken
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Token hợp lệ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Token hợp lệ"
+                data:
+                  type: object
+                  properties:
+                    valid:
+                      type: boolean
+                      example: true
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/auth/change-password:
+  post:
+    tags:
+      - Authentication
+    summary: Đổi mật khẩu
+    description: Đổi mật khẩu của người dùng hiện tại
+    operationId: changePassword
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - currentPassword
+              - newPassword
+            properties:
+              currentPassword:
+                type: string
+                description: Mật khẩu hiện tại
+              newPassword:
+                type: string
+                description: Mật khẩu mới
+            example:
+              currentPassword: "password123"
+              newPassword: "newpassword456"
+    responses:
+      200:
+        description: Đổi mật khẩu thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Đổi mật khẩu thành công"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/auth/permissions:
+  get:
+    tags:
+      - Authentication
+    summary: Lấy quyền của người dùng
+    description: Lấy danh sách quyền của người dùng hiện tại
+    operationId: getUserPermissions
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách quyền
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Quyền người dùng"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Quyen"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"

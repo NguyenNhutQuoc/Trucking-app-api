@@ -1,0 +1,48 @@
+Ketnoi:
+  type: object
+  properties:
+    id:
+      type: number
+      description: ID kết nối
+    ten:
+      type: string
+      description: Tên kết nối
+    congcom:
+      type: string
+      description: Cổng COM
+    tocdo:
+      type: string
+      description: Tốc độ
+    databit:
+      type: string
+      description: Data bits
+    parity:
+      type: string
+      description: Parity
+    stopbit:
+      type: string
+      description: Stop bits
+    kytubatdau:
+      type: string
+      description: Ký tự bắt đầu
+    sokytutrongchuoi:
+      type: number
+      description: Số ký tự trong chuỗi
+    chuoinguoc:
+      type: number
+      description: Chuỗi ngược
+    sokytuboqua:
+      type: number
+      description: Số ký tự bỏ qua
+  example:
+    id: 1
+    ten: "DAU SO"
+    congcom: "COM1"
+    tocdo: "9600"
+    databit: "8"
+    parity: "none"
+    stopbit: "1"
+    kytubatdau: "="
+    sokytutrongchuoi: 6
+    chuoinguoc: 1
+    sokytuboqua: 1

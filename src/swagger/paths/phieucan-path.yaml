@@ -1,0 +1,598 @@
+/phieucan:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân
+    description: Lấy toàn bộ danh sách phiếu cân trong hệ thống
+    operationId: getAllPhieucans
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách phiếu cân
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  post:
+    tags:
+      - Phiếu Cân
+    summary: Tạo phiếu cân mới
+    description: Tạo một phiếu cân mới trong hệ thống
+    operationId: createPhieucan
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PhieucanCreate"
+    responses:
+      201:
+        description: Tạo phiếu cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Tạo phiếu cân thành công"
+                data:
+                  $ref: "#/components/schemas/Phieucan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/{id}:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy thông tin phiếu cân theo ID
+    description: Lấy chi tiết một phiếu cân dựa trên ID
+    operationId: getPhieucanById
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      200:
+        description: Chi tiết phiếu cân
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Chi tiết phiếu cân"
+                data:
+                  $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  put:
+    tags:
+      - Phiếu Cân
+    summary: Cập nhật phiếu cân
+    description: Cập nhật thông tin phiếu cân dựa trên ID
+    operationId: updatePhieucan
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sophieu:
+                type: number
+              soxe:
+                type: string
+              makh:
+                type: string
+              khachhang:
+                type: string
+              mahang:
+                type: string
+              loaihang:
+                type: string
+              tlcan1:
+                type: number
+              xuatnhap:
+                type: string
+              ghichu:
+                type: string
+              kho:
+                type: string
+              sochungtu:
+                type: string
+            example:
+              soxe: "51F-12345"
+              ghichu: "Cập nhật ghi chú"
+              kho: "Kho 2"
+    responses:
+      200:
+        description: Cập nhật phiếu cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Cập nhật phiếu cân thành công"
+                data:
+                  $ref: "#/components/schemas/Phieucan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    tags:
+      - Phiếu Cân
+    summary: Xóa phiếu cân
+    description: Xóa một phiếu cân dựa trên ID
+    operationId: deletePhieucan
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      200:
+        description: Xóa phiếu cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Xóa phiếu cân thành công"
+                data:
+                  type: "null"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/{id}/complete:
+  post:
+    tags:
+      - Phiếu Cân
+    summary: Hoàn thành cân
+    description: Cập nhật trọng lượng cân ra để hoàn thành phiếu cân
+    operationId: completeWeighing
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PhieucanComplete"
+    responses:
+      200:
+        description: Hoàn thành cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Hoàn thành cân thành công"
+                data:
+                  $ref: "#/components/schemas/Phieucan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/{id}/cancel:
+  post:
+    tags:
+      - Phiếu Cân
+    summary: Hủy phiếu cân
+    description: Hủy phiếu cân với lý do
+    operationId: cancelPhieucan
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PhieucanCancel"
+    responses:
+      200:
+        description: Hủy phiếu cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Hủy phiếu cân thành công"
+                data:
+                  $ref: "#/components/schemas/Phieucan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/status/completed:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân đã hoàn thành
+    description: Lấy danh sách phiếu cân đã hoàn thành (đã cân ra)
+    operationId: getCompletedWeighings
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách phiếu cân đã hoàn thành
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân đã hoàn thành"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/status/pending:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân đang chờ
+    description: Lấy danh sách phiếu cân đang chờ (chưa cân ra)
+    operationId: getPendingWeighings
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách phiếu cân đang chờ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân đang chờ"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/status/canceled:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân đã hủy
+    description: Lấy danh sách phiếu cân đã hủy
+    operationId: getCanceledWeighings
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách phiếu cân đã hủy
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân đã hủy"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+/phieucan/date-range/search:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân theo khoảng thời gian
+    description: Lấy danh sách phiếu cân trong một khoảng thời gian
+    operationId: getPhieucansByDateRange
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/StartDateQueryParam"
+      - $ref: "#/components/parameters/EndDateQueryParam"
+    responses:
+      200:
+        description: Danh sách phiếu cân theo khoảng thời gian
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân theo khoảng thời gian"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/vehicle/{soxe}:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân theo biển số xe
+    description: Lấy danh sách phiếu cân của một biển số xe cụ thể
+    operationId: getPhieucansBySoxe
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: soxe
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Biển số xe
+    responses:
+      200:
+        description: Danh sách phiếu cân theo xe
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân của xe"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/product/{mahang}:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân theo mã hàng
+    description: Lấy danh sách phiếu cân của một loại hàng hóa cụ thể
+    operationId: getPhieucansByProduct
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: mahang
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Mã hàng hóa
+    responses:
+      200:
+        description: Danh sách phiếu cân theo hàng hóa
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân của loại hàng"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/customer/{makh}:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Lấy danh sách phiếu cân theo mã khách hàng
+    description: Lấy danh sách phiếu cân của một khách hàng cụ thể
+    operationId: getPhieucansByCustomer
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: makh
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Mã khách hàng
+    responses:
+      200:
+        description: Danh sách phiếu cân theo khách hàng
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách phiếu cân của khách hàng"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Phieucan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/statistics/today:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Thống kê phiếu cân trong ngày
+    description: Lấy thống kê về phiếu cân trong ngày hôm nay
+    operationId: getTodayStatistics
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Thống kê phiếu cân trong ngày
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Thống kê hôm nay"
+                data:
+                  $ref: "#/components/schemas/PhieucanStatistics"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/phieucan/statistics/weight:
+  get:
+    tags:
+      - Phiếu Cân
+    summary: Thống kê trọng lượng theo khoảng thời gian
+    description: Lấy thống kê trọng lượng phiếu cân trong một khoảng thời gian
+    operationId: getWeightStatistics
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: "#/components/parameters/StartDateQueryParam"
+      - $ref: "#/components/parameters/EndDateQueryParam"
+    responses:
+      200:
+        description: Thống kê trọng lượng theo khoảng thời gian
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Thống kê cân theo khoảng thời gian"
+                data:
+                  $ref: "#/components/schemas/PhieucanStatistics"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      500:
+        $ref: "#/components/responses/InternalServerError"

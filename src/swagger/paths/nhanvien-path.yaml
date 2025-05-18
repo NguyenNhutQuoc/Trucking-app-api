@@ -1,0 +1,305 @@
+/nhanvien:
+  get:
+    tags:
+      - Nhân Viên
+    summary: Lấy danh sách nhân viên
+    description: Lấy toàn bộ danh sách nhân viên trong hệ thống
+    operationId: getAllNhanviens
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Danh sách nhân viên
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách nhân viên"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Nhanvien"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  post:
+    tags:
+      - Nhân Viên
+    summary: Tạo nhân viên mới
+    description: Tạo một nhân viên mới trong hệ thống
+    operationId: createNhanvien
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NhanvienCreate"
+    responses:
+      201:
+        description: Tạo nhân viên thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Tạo nhân viên thành công"
+                data:
+                  $ref: "#/components/schemas/Nhanvien"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/nhanvien/{id}:
+  get:
+    tags:
+      - Nhân Viên
+    summary: Lấy thông tin nhân viên theo ID
+    description: Lấy chi tiết một nhân viên dựa trên ID
+    operationId: getNhanvienById
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID nhân viên
+    responses:
+      200:
+        description: Chi tiết nhân viên
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Chi tiết nhân viên"
+                data:
+                  $ref: "#/components/schemas/Nhanvien"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin hoặc chính nhân viên đó)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  put:
+    tags:
+      - Nhân Viên
+    summary: Cập nhật nhân viên
+    description: Cập nhật thông tin nhân viên dựa trên ID
+    operationId: updateNhanvien
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID nhân viên
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NhanvienUpdate"
+    responses:
+      200:
+        description: Cập nhật nhân viên thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Cập nhật nhân viên thành công"
+                data:
+                  $ref: "#/components/schemas/Nhanvien"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    tags:
+      - Nhân Viên
+    summary: Xóa nhân viên
+    description: Xóa một nhân viên dựa trên ID
+    operationId: deleteNhanvien
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID nhân viên
+    responses:
+      200:
+        description: Xóa nhân viên thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Xóa nhân viên thành công"
+                data:
+                  type: "null"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/nhanvien/{id}/permissions:
+  get:
+    tags:
+      - Nhân Viên
+    summary: Lấy danh sách quyền của nhân viên
+    description: Lấy chi tiết quyền của một nhân viên dựa trên ID
+    operationId: getNhanvienPermissions
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID nhân viên
+    responses:
+      200:
+        description: Danh sách quyền của nhân viên
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách quyền của nhân viên"
+                data:
+                  $ref: "#/components/schemas/NhanvienWithPermissions"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"

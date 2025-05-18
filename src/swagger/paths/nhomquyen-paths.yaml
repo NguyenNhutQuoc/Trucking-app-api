@@ -1,0 +1,183 @@
+/nhomquyen/{nhomId}/permissions/{formId}:
+  post:
+    tags:
+      - Nhóm Quyền
+    summary: Thêm quyền vào nhóm quyền
+    description: Thêm một quyền (form) vào nhóm quyền
+    operationId: addPermissionToGroup
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: nhomId
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID nhóm quyền
+      - name: formId
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID form (quyền)
+    responses:
+      200:
+        description: Thêm quyền thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Thêm quyền thành công"
+                data:
+                  $ref: "#/components/schemas/Quyen"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    tags:
+      - Nhóm Quyền
+    summary: Xóa quyền khỏi nhóm quyền
+    description: Xóa một quyền (form) khỏi nhóm quyền
+    operationId: removePermissionFromGroup
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: nhomId
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID nhóm quyền
+      - name: formId
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID form (quyền)
+    responses:
+      200:
+        description: Xóa quyền thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Xóa quyền thành công"
+                data:
+                  type: "null"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"
+
+/nhomquyen/{nhomId}/permissions:
+  put:
+    tags:
+      - Nhóm Quyền
+    summary: Cập nhật danh sách quyền của nhóm
+    description: Cập nhật toàn bộ danh sách quyền của một nhóm quyền
+    operationId: updateGroupPermissions
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: nhomId
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID nhóm quyền
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - formIds
+            properties:
+              formIds:
+                type: array
+                items:
+                  type: number
+                description: Danh sách ID của các form (quyền)
+            example:
+              formIds: [1, 2, 3, 5, 8]
+    responses:
+      200:
+        description: Cập nhật quyền thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Cập nhật quyền thành công"
+                data:
+                  type: "null"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền truy cập (Chỉ admin)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Không có quyền truy cập"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+      500:
+        $ref: "#/components/responses/InternalServerError"

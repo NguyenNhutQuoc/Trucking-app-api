@@ -1,0 +1,42 @@
+Quyen:
+  type: object
+  required:
+    - nhomId
+    - formId
+  properties:
+    quyenId:
+      type: number
+      description: ID tự động tạo của quyền
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+    formId:
+      type: number
+      description: ID form
+    nhomQuyen:
+      $ref: "#/components/schemas/NhomQuyen"
+    form:
+      $ref: "#/components/schemas/Form"
+  example:
+    quyenId: 1
+    nhomId: 1
+    formId: 1
+    form:
+      formId: 1
+      ten: "Thông số hệ thống"
+
+QuyenCreate:
+  type: object
+  required:
+    - nhomId
+    - formId
+  properties:
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+    formId:
+      type: number
+      description: ID form
+  example:
+    nhomId: 1
+    formId: 1

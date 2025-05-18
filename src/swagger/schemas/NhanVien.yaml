@@ -1,0 +1,130 @@
+Nhanvien:
+  type: object
+  required:
+    - nvId
+    - tenNV
+    - matkhau
+  properties:
+    nvId:
+      type: string
+      description: ID nhân viên (tên đăng nhập)
+    tenNV:
+      type: string
+      description: Tên nhân viên
+    matkhau:
+      type: string
+      description: Mật khẩu
+    trangthai:
+      type: number
+      description: Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)
+    type:
+      type: number
+      description: Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+  example:
+    nvId: "admin"
+    tenNV: "Admin"
+    matkhau: "********"
+    trangthai: 0
+    type: 1
+    nhomId: 1
+
+NhanvienCreate:
+  type: object
+  required:
+    - nvId
+    - tenNV
+    - matkhau
+  properties:
+    nvId:
+      type: string
+      description: ID nhân viên (tên đăng nhập)
+    tenNV:
+      type: string
+      description: Tên nhân viên
+    matkhau:
+      type: string
+      description: Mật khẩu
+    trangthai:
+      type: number
+      description: Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)
+    type:
+      type: number
+      description: Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+  example:
+    nvId: "nhanvien1"
+    tenNV: "Nhân Viên 1"
+    matkhau: "123456"
+    trangthai: 0
+    type: 0
+    nhomId: 4
+
+NhanvienUpdate:
+  type: object
+  properties:
+    tenNV:
+      type: string
+      description: Tên nhân viên
+    matkhau:
+      type: string
+      description: Mật khẩu
+    trangthai:
+      type: number
+      description: Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)
+    type:
+      type: number
+      description: Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+  example:
+    tenNV: "Nhân Viên 1 Update"
+    trangthai: 0
+    nhomId: 5
+
+NhanvienWithPermissions:
+  type: object
+  properties:
+    nvId:
+      type: string
+      description: ID nhân viên (tên đăng nhập)
+    tenNV:
+      type: string
+      description: Tên nhân viên
+    trangthai:
+      type: number
+      description: Trạng thái (0 = hoạt động, 1 = vô hiệu hóa)
+    type:
+      type: number
+      description: Loại tài khoản (0 = người dùng thường, 1 = quản trị viên)
+    nhomId:
+      type: number
+      description: ID nhóm quyền
+    nhomQuyen:
+      $ref: "#/components/schemas/NhomQuyen"
+    permissions:
+      type: array
+      items:
+        $ref: "#/components/schemas/Quyen"
+  example:
+    nvId: "admin"
+    tenNV: "Admin"
+    trangthai: 0
+    type: 1
+    nhomId: 1
+    nhomQuyen:
+      nhomId: 1
+      ma: "admin"
+      ten: "Admin"
+    permissions:
+      - quyenId: 1
+        nhomId: 1
+        formId: 1
+        form:
+          formId: 1
+          ten: "Thông số hệ thống"
