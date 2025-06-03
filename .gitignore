@@ -22,3 +22,20 @@ coverage
 .env.test.local
 .env.production.local
 .env.example
+
+# Vercel
+.vercel
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
