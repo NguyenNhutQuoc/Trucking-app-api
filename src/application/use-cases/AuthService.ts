@@ -23,13 +23,14 @@ export class AuthService {
     username: string,
     password: string
   ): Promise<{ user: Partial<Nhanvien>; token: string }> {
+    console.log("User for authentication:");
     const user = await this.nhanvienRepository.authenticate(username, password);
 
     if (!user) {
       throw new UnauthorizedError("Tên đăng nhập hoặc mật khẩu không đúng");
     }
 
-    if (user.trangthai !== 0) {
+    if (user.trangthai !== 1) {
       throw new UnauthorizedError("Tài khoản đã bị khóa hoặc vô hiệu hóa");
     }
 

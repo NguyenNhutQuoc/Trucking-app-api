@@ -64,6 +64,8 @@ export class NhanvienRepository implements INhanvienRepository {
       relations: ["nhomQuyen"],
     });
 
+    console.log("Authenticating user:", user);
+
     if (!user) {
       return null;
     }

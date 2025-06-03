@@ -1,7 +1,7 @@
 import { app, initializeDatabase } from "./app";
 import { config } from "./config/env";
 import { logger } from "./utils/logger";
-
+import serverless from "serverless-http";
 // Start the server
 const startServer = async () => {
   try {

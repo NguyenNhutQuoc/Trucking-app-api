@@ -2,6 +2,7 @@
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
+import { env } from "process";
 
 // Get environment
 const nodeEnv = process.env.NODE_ENV || "development";
@@ -19,7 +20,7 @@ const loadEnvironmentFiles = () => {
 
   envFiles.forEach((envFile) => {
     const envPath = path.resolve(process.cwd(), envFile);
-
+    console.log(envPath);
     if (fs.existsSync(envPath)) {
       console.log(`✅ Loading: ${envFile}`);
       dotenv.config({
