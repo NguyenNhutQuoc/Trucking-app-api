@@ -15,5 +15,6 @@ router.use("/hanghoa", hanghoaRoutes);
 router.use("/khachhang", khachhangRoutes);
 router.use("/soxe", soxeRoutes);
 router.use("/nhomquyen", nhomQuyenRoutes);
+router.use("/nhanvien", require("./nhanvienRoutes").default);
 
 export default router;

@@ -19,6 +19,7 @@ import {
   subDays,
 } from "date-fns";
 import { AppDataSource } from "../../config/database";
+import { Hanghoa } from "@/domain/entities/Hanghoa";
 
 export class PhieucanRepository implements IPhieucanRepository {
   private repository: Repository<Phieucan>;
@@ -182,38 +183,66 @@ export class PhieucanRepository implements IPhieucanRepository {
     });
   }
 
-  async getWeightStatisticsByCompany(): Promise<any[]> {
+  async getWeightStatisticsByCompany(
+    startDate: Date,
+    endDate: Date
+  ): Promise<any[]> {
     return this.repository
       .createQueryBuilder("phieucan")
       .select("phieucan.khachhang", "companyName")
       .addSelect("COUNT(phieucan.stt)", "weighCount")
       .addSelect("SUM(ABS(phieucan.tlcan1 - phieucan.tlcan2))", "totalWeight")
-      .where("phieucan.ngaycan2 IS NOT NULL")
+      .where(
+        "phieucan.ngaycan2 IS NOT NULL and phieucan.ngaycan1 BETWEEN :startDate AND :endDate",
+        {
+          startDate: startOfDay(startDate),
+          endDate: endOfDay(endDate),
+        }
+      )
       .groupBy("phieucan.khachhang")
       .orderBy("totalWeight", "DESC")
       .getRawMany();
   }
 
-  async getWeightStatisticsByProduct(): Promise<any[]> {
+  async getWeightStatisticsByProduct(
+    startDate: Date,
+    endDate: Date
+  ): Promise<any[]> {
     return this.repository
       .createQueryBuilder("phieucan")
       .select("phieucan.loaihang", "productName")
+      .addSelect("phieucan.mahang", "productId")
       .addSelect("COUNT(phieucan.stt)", "weighCount")
       .addSelect("SUM(ABS(phieucan.tlcan1 - phieucan.tlcan2))", "totalWeight")
-      .where("phieucan.ngaycan2 IS NOT NULL")
-      .groupBy("phieucan.loaihang")
+      .where(
+        "phieucan.ngaycan2 IS NOT NULL and phieucan.ngaycan1 BETWEEN :startDate AND :endDate",
+        {
+          startDate: startOfDay(startDate),
+          endDate: endOfDay(endDate),
+        }
+      )
+      .groupBy("phieucan.loaihang, phieucan.mahang")
       .orderBy("totalWeight", "DESC")
       .getRawMany();
   }
 
-  async getWeightStatisticsByVehicle(): Promise<any[]> {
+  async getWeightStatisticsByVehicle(
+    startDate: Date,
+    endDate: Date
+  ): Promise<any[]> {
     return this.repository
       .createQueryBuilder("phieucan")
       .select("phieucan.soxe", "vehicleNumber")
       .addSelect("COUNT(phieucan.stt)", "weighCount")
       .addSelect("SUM(ABS(phieucan.tlcan1 - phieucan.tlcan2))", "totalWeight")
       .addSelect("AVG(ABS(phieucan.tlcan1 - phieucan.tlcan2))", "averageWeight")
-      .where("phieucan.ngaycan2 IS NOT NULL")
+      .where(
+        "phieucan.ngaycan2 IS NOT NULL and phieucan.ngaycan1 BETWEEN :startDate AND :endDate",
+        {
+          startDate: startOfDay(startDate),
+          endDate: endOfDay(endDate),
+        }
+      )
       .groupBy("phieucan.soxe")
       .orderBy("weighCount", "DESC")
       .getRawMany();

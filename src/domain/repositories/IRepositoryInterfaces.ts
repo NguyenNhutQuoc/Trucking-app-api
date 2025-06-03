@@ -20,21 +20,31 @@ export interface IPhieucanRepository extends IGenericRepository<any> {
   getPending(): Promise<any[]>;
   getCanceledOrDeleted(): Promise<any[]>;
   getTodayRecords(): Promise<any[]>;
-  getWeightStatisticsByCompany(): Promise<
+  getWeightStatisticsByCompany(
+    startDate: Date,
+    endDate: Date
+  ): Promise<
     {
       companyName: string;
       weighCount: number;
       totalWeight: number;
     }[]
   >;
-  getWeightStatisticsByProduct(): Promise<
+  getWeightStatisticsByProduct(
+    startDate: Date,
+    endDate: Date
+  ): Promise<
     {
+      productId: string;
       productName: string;
       weighCount: number;
       totalWeight: number;
     }[]
   >;
-  getWeightStatisticsByVehicle(): Promise<
+  getWeightStatisticsByVehicle(
+    startDate: Date,
+    endDate: Date
+  ): Promise<
     {
       vehicleNumber: string;
       weighCount: number;
@@ -81,4 +91,9 @@ export interface IQuyenRepository extends IGenericRepository<any> {
   getByNhomId(nhomId: number): Promise<any[]>;
   addPermission(nhomId: number, formId: number): Promise<any>;
   removePermission(nhomId: number, formId: number): Promise<boolean>;
+}
+
+export interface INhanvienRepository extends IGenericRepository<any> {
+  authenticate(username: string, password: string): Promise<any | null>;
+  getWithPermissions(nvId: string): Promise<any>;
 }

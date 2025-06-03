@@ -3,10 +3,15 @@ import { PhieucanController } from "../controllers/PhieucanController";
 import { PhieucanService } from "../../application/use-cases/PhieucanService";
 import { PhieucanRepository } from "../../infrastructure/repositories/PhieucanRepository";
 import { authenticate } from "../middlewares/authMiddleware";
+import { HanghoaRepository } from "../../infrastructure/repositories/HanghoaRepository";
 
 const router = Router();
 const phieucanRepository = new PhieucanRepository();
-const phieucanService = new PhieucanService(phieucanRepository);
+const hanghoaRepository = new HanghoaRepository();
+const phieucanService = new PhieucanService(
+  phieucanRepository,
+  hanghoaRepository
+);
 const phieucanController = new PhieucanController(phieucanService);
 
 // Public routes (if any)
