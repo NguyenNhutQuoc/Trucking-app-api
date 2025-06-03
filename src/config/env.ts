@@ -1,35 +1,52 @@
-// src/config/env.ts - Environment-aware configuration
+// src/config/env.ts - Auto environment file switching
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
 
-dotenv.config();
+// Get environment
+const nodeEnv = process.env.NODE_ENV || "development";
+
+// Function to load environment files with fallback
+const loadEnvironmentFiles = () => {
+  const envFiles = [
+    `.env.${nodeEnv}.local`, // .env.production.local or .env.development.local
+    `.env.local`, // .env.local (local overrides)
+    `.env.${nodeEnv}`, // .env.production or .env.development
+    `.env`, // .env (default fallback)
+  ];
+
+  console.log(`🌍 Environment: ${nodeEnv}`);
+
+  envFiles.forEach((envFile) => {
+    const envPath = path.resolve(process.cwd(), envFile);
+
+    if (fs.existsSync(envPath)) {
+      console.log(`✅ Loading: ${envFile}`);
+      dotenv.config({
+        path: envPath,
+        debug: nodeEnv === "development", // Show debug info in dev
+      });
+    } else {
+      console.log(`⏭️  Skipping: ${envFile} (not found)`);
+    }
+  });
+};
+
+// Load environment files
+loadEnvironmentFiles();
 
 export const config = {
   // Application
   port: parseInt(process.env.PORT || "3000", 10),
-  nodeEnv: process.env.NODE_ENV || "development",
+  nodeEnv: nodeEnv,
   apiPrefix: process.env.API_PREFIX || "/api/v1",
 
-  // Database - Auto-switch based on environment
-  dbHost:
-    process.env.DB_HOST ||
-    (process.env.NODE_ENV === "production"
-      ? "gateway01.ap-southeast-1.prod.aws.tidbcloud.com"
-      : "localhost"),
-  dbPort: parseInt(
-    process.env.DB_PORT ||
-      (process.env.NODE_ENV === "production" ? "4000" : "1433"),
-    10
-  ),
-  dbUsername:
-    process.env.DB_USERNAME ||
-    (process.env.NODE_ENV === "production" ? "your-tidb-username.root" : "sa"),
+  // Database - Now auto-switches based on loaded env file
+  dbHost: process.env.DB_HOST || "localhost",
+  dbPort: parseInt(process.env.DB_PORT || "1433", 10),
+  dbUsername: process.env.DB_USERNAME || "sa",
   dbPassword: process.env.DB_PASSWORD || "",
-  dbName:
-    process.env.DB_NAME ||
-    (process.env.NODE_ENV === "production"
-      ? "truck_weighing"
-      : "TruckWeighing"),
-  // Only for MSSQL (local)
+  dbName: process.env.DB_NAME || "TruckWeighing",
   dbInstanceName: process.env.DB_INSTANCE_NAME || "SQLEXPRESS01",
 
   // Authentication
@@ -43,24 +60,41 @@ export const config = {
   logLevel: process.env.LOG_LEVEL || "info",
 };
 
-console.log(`Database configuration loaded for: ${config.nodeEnv}`);
+// Enhanced logging
+console.log(`📊 Configuration Summary:`);
+console.log(`   Environment: ${config.nodeEnv}`);
 console.log(
-  `Database type: ${config.nodeEnv === "production" ? "TiDB (MySQL)" : "MSSQL"}`
+  `   Database Type: ${
+    config.nodeEnv === "production" ? "TiDB (MySQL)" : "MSSQL"
+  }`
 );
-console.log(`Database host: ${config.dbHost}`);
+console.log(`   Database Host: ${config.dbHost}`);
+console.log(`   Database Port: ${config.dbPort}`);
+console.log(`   Database User: ${config.dbUsername}`);
+console.log(`   Database Name: ${config.dbName}`);
+console.log(`   API Prefix: ${config.apiPrefix}`);
 
-// src/utils/logger.ts - Enhanced logging for multi-env
-import winston from "winston";
-import path from "path";
+// Validate configuration
+const validateConfig = () => {
+  const errors: string[] = [];
 
-const { combine, timestamp, printf, colorize, align } = winston.format;
-
-const logFormat = printf(({ level, message, timestamp, ...metadata }) => {
-  let msg = `${timestamp} [${level}]: ${message}`;
-
-  if (Object.keys(metadata).length > 0) {
-    msg += JSON.stringify(metadata);
+  if (!config.dbHost) errors.push("DB_HOST is required");
+  if (!config.dbUsername) errors.push("DB_USERNAME is required");
+  if (!config.dbPassword) errors.push("DB_PASSWORD is required");
+  if (!config.jwtSecret || config.jwtSecret === "your-jwt-secret-key") {
+    errors.push("JWT_SECRET must be set to a secure value");
   }
 
-  return msg;
-});
+  if (errors.length > 0) {
+    console.error(`❌ Configuration Errors:`);
+    errors.forEach((error) => console.error(`   - ${error}`));
+
+    if (config.nodeEnv === "production") {
+      throw new Error("Invalid production configuration");
+    }
+  } else {
+    console.log(`✅ Configuration is valid`);
+  }
+};
+
+validateConfig();
