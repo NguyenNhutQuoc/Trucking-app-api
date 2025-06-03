@@ -719,6 +719,10 @@
             "type": "string",
             "description": "Tên loại hàng"
           },
+          "dongia": {
+            "type": "number",
+            "description": "Đơn giá (VNĐ)"
+          },
           "ngaycan1": {
             "type": "string",
             "format": "date-time",
@@ -770,6 +774,7 @@
           "khachhang": "Khách hàng A",
           "mahang": "H01",
           "loaihang": "Cát xây dựng",
+          "dongia": 100000,
           "ngaycan1": "2025-05-16T08:30:00Z",
           "ngaycan2": "2025-05-16T09:15:00Z",
           "tlcan1": 42560,
