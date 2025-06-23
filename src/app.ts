@@ -9,9 +9,12 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerOptions from "./config/swagger";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger";
+import cors from "cors";
 
 // Create Express application
 const app = express();
+// Cách 1: Cho phép tất cả origins (chỉ dùng development)
+app.use(cors());
 
 // Configure server
 configureServer(app);
