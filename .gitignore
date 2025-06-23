@@ -24,6 +24,8 @@ coverage
 .env.development
 .env.production
 .env.example
+.env.development
+.env.production
 
 # Vercel
 .vercel

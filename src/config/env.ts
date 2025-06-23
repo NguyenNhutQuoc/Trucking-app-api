@@ -2,7 +2,6 @@
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
-import { env } from "process";
 
 // Get environment
 const nodeEnv = process.env.NODE_ENV || "development";
@@ -38,7 +37,7 @@ loadEnvironmentFiles();
 
 export const config = {
   // Application
-  port: parseInt(process.env.PORT || "3000", 10),
+  port: parseInt(process.env.PORT || "3001", 10),
   nodeEnv: nodeEnv,
   apiPrefix: process.env.API_PREFIX || "/api/v1",
 
@@ -65,9 +64,7 @@ export const config = {
 console.log(`📊 Configuration Summary:`);
 console.log(`   Environment: ${config.nodeEnv}`);
 console.log(
-  `   Database Type: ${
-    config.nodeEnv === "production" ? "TiDB (MySQL)" : "MSSQL"
-  }`
+  `   Database Type: ${config.nodeEnv === "production" ? "MSSQL" : "MSSQL"}`
 );
 console.log(`   Database Host: ${config.dbHost}`);
 console.log(`   Database Port: ${config.dbPort}`);

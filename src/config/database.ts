@@ -2,6 +2,7 @@
 import { DataSource } from "typeorm";
 import { config } from "./env";
 import { join } from "path";
+import options from "./swagger";
 
 // Database configuration factory
 const createDataSourceConfig = () => {
@@ -36,20 +37,20 @@ const createDataSourceConfig = () => {
     };
   }
 
-  // Production - TiDB (MySQL compatible)
+  // Production - MSSQL
   return {
     ...baseConfig,
-    type: "mysql" as const,
+    type: "mssql" as const,
     host: config.dbHost,
     port: config.dbPort,
     username: config.dbUsername,
     password: config.dbPassword,
     database: config.dbName,
-    ssl: {
-      rejectUnauthorized: false,
+    options: {
+      enableArithAbort: true,
+      trustServerCertificate: true,
+      encrypt: false, // Use encryption in production
     },
-    charset: "utf8mb4",
-    timezone: "+07:00",
     extra: {
       connectionLimit: 10,
     },

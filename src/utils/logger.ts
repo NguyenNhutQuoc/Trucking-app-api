@@ -5,7 +5,7 @@ dotenv.config();
 
 export const config = {
   // Application
-  port: parseInt(process.env.PORT || "3000", 10),
+  port: parseInt(process.env.PORT || "3001", 10),
   nodeEnv: process.env.NODE_ENV || "development",
   apiPrefix: process.env.API_PREFIX || "/api/v1",
 
@@ -45,7 +45,7 @@ export const config = {
 
 console.log(`Database configuration loaded for: ${config.nodeEnv}`);
 console.log(
-  `Database type: ${config.nodeEnv === "production" ? "TiDB (MySQL)" : "MSSQL"}`
+  `Database type: ${config.nodeEnv === "production" ? "MSSQL" : "MSSQL"}`
 );
 console.log(`Database host: ${config.dbHost}`);
 
