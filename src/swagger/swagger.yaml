@@ -15,7 +15,7 @@ info:
     url: https://yourwebsite.com
 
 servers:
-  - url: http://localhost:3001/api/v1
+  - url: http://localhost:3002/api/v1
     description: Development server
   - url: https://api.example.com/api
     description: Production server

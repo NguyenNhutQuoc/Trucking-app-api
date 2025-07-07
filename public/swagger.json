@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001/api/v1",
+      "url": "http://localhost:3002/api/v1",
       "description": "Development server"
     },
     {
@@ -133,10 +133,7 @@
       },
       "Hanghoa": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "id": {
             "type": "number",
@@ -164,10 +161,7 @@
       },
       "HanghoaCreate": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "ma": {
             "type": "string",
@@ -273,10 +267,7 @@
       },
       "Khachhang": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "id": {
             "type": "number",
@@ -309,10 +300,7 @@
       },
       "KhachhangCreate": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "ma": {
             "type": "string",
@@ -405,11 +393,7 @@
       },
       "Nhanvien": {
         "type": "object",
-        "required": [
-          "nvId",
-          "tenNV",
-          "matkhau"
-        ],
+        "required": ["nvId", "tenNV", "matkhau"],
         "properties": {
           "nvId": {
             "type": "string",
@@ -447,11 +431,7 @@
       },
       "NhanvienCreate": {
         "type": "object",
-        "required": [
-          "nvId",
-          "tenNV",
-          "matkhau"
-        ],
+        "required": ["nvId", "tenNV", "matkhau"],
         "properties": {
           "nvId": {
             "type": "string",
@@ -576,10 +556,7 @@
       },
       "NhomQuyen": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "nhomId": {
             "type": "number",
@@ -602,10 +579,7 @@
       },
       "NhomQuyenCreate": {
         "type": "object",
-        "required": [
-          "ma",
-          "ten"
-        ],
+        "required": ["ma", "ten"],
         "properties": {
           "ma": {
             "type": "string",
@@ -687,9 +661,7 @@
       },
       "Phieucan": {
         "type": "object",
-        "required": [
-          "soxe"
-        ],
+        "required": ["soxe"],
         "properties": {
           "stt": {
             "type": "number",
@@ -789,9 +761,7 @@
       },
       "PhieucanCreate": {
         "type": "object",
-        "required": [
-          "soxe"
-        ],
+        "required": ["soxe"],
         "properties": {
           "sophieu": {
             "type": "number",
@@ -853,9 +823,7 @@
       },
       "PhieucanComplete": {
         "type": "object",
-        "required": [
-          "tlcan2"
-        ],
+        "required": ["tlcan2"],
         "properties": {
           "tlcan2": {
             "type": "number",
@@ -874,9 +842,7 @@
       },
       "PhieucanCancel": {
         "type": "object",
-        "required": [
-          "reason"
-        ],
+        "required": ["reason"],
         "properties": {
           "reason": {
             "type": "string",
@@ -1006,10 +972,7 @@
       },
       "Quyen": {
         "type": "object",
-        "required": [
-          "nhomId",
-          "formId"
-        ],
+        "required": ["nhomId", "formId"],
         "properties": {
           "quyenId": {
             "type": "number",
@@ -1042,10 +1005,7 @@
       },
       "QuyenCreate": {
         "type": "object",
-        "required": [
-          "nhomId",
-          "formId"
-        ],
+        "required": ["nhomId", "formId"],
         "properties": {
           "nhomId": {
             "type": "number",
@@ -1063,9 +1023,7 @@
       },
       "Soxe": {
         "type": "object",
-        "required": [
-          "soxe"
-        ],
+        "required": ["soxe"],
         "properties": {
           "id": {
             "type": "number",
@@ -1088,9 +1046,7 @@
       },
       "SoxeCreate": {
         "type": "object",
-        "required": [
-          "soxe"
-        ],
+        "required": ["soxe"],
         "properties": {
           "soxe": {
             "type": "string",
@@ -1158,9 +1114,7 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Đăng nhập vào hệ thống",
         "description": "Đăng nhập bằng tên đăng nhập và mật khẩu",
         "operationId": "login",
@@ -1170,10 +1124,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "username",
-                  "password"
-                ],
+                "required": ["username", "password"],
                 "properties": {
                   "username": {
                     "type": "string",
@@ -1250,9 +1201,7 @@
     },
     "/auth/validate-token": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Kiểm tra tính hợp lệ của token",
         "description": "Kiểm tra xem token hiện tại có hợp lệ hay không",
         "operationId": "validateToken",
@@ -1302,9 +1251,7 @@
     },
     "/auth/change-password": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Đổi mật khẩu",
         "description": "Đổi mật khẩu của người dùng hiện tại",
         "operationId": "changePassword",
@@ -1319,10 +1266,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "currentPassword",
-                  "newPassword"
-                ],
+                "required": ["currentPassword", "newPassword"],
                 "properties": {
                   "currentPassword": {
                     "type": "string",
@@ -1382,9 +1326,7 @@
     },
     "/auth/permissions": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "summary": "Lấy quyền của người dùng",
         "description": "Lấy danh sách quyền của người dùng hiện tại",
         "operationId": "getUserPermissions",
@@ -1431,9 +1373,7 @@
     },
     "/hanghoa": {
       "get": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Lấy danh sách hàng hóa",
         "description": "Lấy toàn bộ danh sách hàng hóa trong hệ thống",
         "operationId": "getAllHanghoas",
@@ -1478,9 +1418,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Tạo hàng hóa mới",
         "description": "Tạo một mặt hàng mới trong hệ thống",
         "operationId": "createHanghoa",
@@ -1537,9 +1475,7 @@
     },
     "/hanghoa/search": {
       "get": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Tìm kiếm hàng hóa theo tên",
         "description": "Tìm kiếm hàng hóa theo tên hoặc trả về tất cả nếu không có từ khóa",
         "operationId": "searchHanghoaByName",
@@ -1597,9 +1533,7 @@
     },
     "/hanghoa/{id}": {
       "get": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Lấy thông tin hàng hóa theo ID",
         "description": "Lấy chi tiết một hàng hóa dựa trên ID",
         "operationId": "getHanghoaById",
@@ -1649,9 +1583,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Cập nhật hàng hóa",
         "description": "Cập nhật thông tin hàng hóa dựa trên ID",
         "operationId": "updateHanghoa",
@@ -1714,9 +1646,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Xóa hàng hóa",
         "description": "Xóa một hàng hóa dựa trên ID",
         "operationId": "deleteHanghoa",
@@ -1768,9 +1698,7 @@
     },
     "/hanghoa/code/{ma}": {
       "get": {
-        "tags": [
-          "Hàng Hóa"
-        ],
+        "tags": ["Hàng Hóa"],
         "summary": "Lấy thông tin hàng hóa theo mã",
         "description": "Lấy chi tiết một hàng hóa dựa trên mã",
         "operationId": "getHanghoaByMa",
@@ -1828,9 +1756,7 @@
     },
     "/khachhang": {
       "get": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Lấy danh sách khách hàng",
         "description": "Lấy toàn bộ danh sách khách hàng trong hệ thống",
         "operationId": "getAllKhachhangs",
@@ -1875,9 +1801,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Tạo khách hàng mới",
         "description": "Tạo một khách hàng mới trong hệ thống",
         "operationId": "createKhachhang",
@@ -1934,9 +1858,7 @@
     },
     "/khachhang/search": {
       "get": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Tìm kiếm khách hàng theo tên",
         "description": "Tìm kiếm khách hàng theo tên hoặc trả về tất cả nếu không có từ khóa",
         "operationId": "searchKhachhangByName",
@@ -1994,9 +1916,7 @@
     },
     "/khachhang/{id}": {
       "get": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Lấy thông tin khách hàng theo ID",
         "description": "Lấy chi tiết một khách hàng dựa trên ID",
         "operationId": "getKhachhangById",
@@ -2046,9 +1966,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Cập nhật khách hàng",
         "description": "Cập nhật thông tin khách hàng dựa trên ID",
         "operationId": "updateKhachhang",
@@ -2111,9 +2029,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Xóa khách hàng",
         "description": "Xóa một khách hàng dựa trên ID",
         "operationId": "deleteKhachhang",
@@ -2165,9 +2081,7 @@
     },
     "/khachhang/code/{ma}": {
       "get": {
-        "tags": [
-          "Khách Hàng"
-        ],
+        "tags": ["Khách Hàng"],
         "summary": "Lấy thông tin khách hàng theo mã",
         "description": "Lấy chi tiết một khách hàng dựa trên mã",
         "operationId": "getKhachhangByMa",
@@ -2225,9 +2139,7 @@
     },
     "/nhanvien": {
       "get": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Lấy danh sách nhân viên",
         "description": "Lấy toàn bộ danh sách nhân viên trong hệ thống",
         "operationId": "getAllNhanviens",
@@ -2292,9 +2204,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Tạo nhân viên mới",
         "description": "Tạo một nhân viên mới trong hệ thống",
         "operationId": "createNhanvien",
@@ -2371,9 +2281,7 @@
     },
     "/nhanvien/{id}": {
       "get": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Lấy thông tin nhân viên theo ID",
         "description": "Lấy chi tiết một nhân viên dựa trên ID",
         "operationId": "getNhanvienById",
@@ -2449,9 +2357,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Cập nhật nhân viên",
         "description": "Cập nhật thông tin nhân viên dựa trên ID",
         "operationId": "updateNhanvien",
@@ -2540,9 +2446,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Xóa nhân viên",
         "description": "Xóa một nhân viên dựa trên ID",
         "operationId": "deleteNhanvien",
@@ -2620,9 +2524,7 @@
     },
     "/nhanvien/{id}/permissions": {
       "get": {
-        "tags": [
-          "Nhân Viên"
-        ],
+        "tags": ["Nhân Viên"],
         "summary": "Lấy danh sách quyền của nhân viên",
         "description": "Lấy chi tiết quyền của một nhân viên dựa trên ID",
         "operationId": "getNhanvienPermissions",
@@ -2700,9 +2602,7 @@
     },
     "/nhomquyen/{nhomId}/permissions/{formId}": {
       "post": {
-        "tags": [
-          "Nhóm Quyền"
-        ],
+        "tags": ["Nhóm Quyền"],
         "summary": "Thêm quyền vào nhóm quyền",
         "description": "Thêm một quyền (form) vào nhóm quyền",
         "operationId": "addPermissionToGroup",
@@ -2787,9 +2687,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Nhóm Quyền"
-        ],
+        "tags": ["Nhóm Quyền"],
         "summary": "Xóa quyền khỏi nhóm quyền",
         "description": "Xóa một quyền (form) khỏi nhóm quyền",
         "operationId": "removePermissionFromGroup",
@@ -2876,9 +2774,7 @@
     },
     "/nhomquyen/{nhomId}/permissions": {
       "put": {
-        "tags": [
-          "Nhóm Quyền"
-        ],
+        "tags": ["Nhóm Quyền"],
         "summary": "Cập nhật danh sách quyền của nhóm",
         "description": "Cập nhật toàn bộ danh sách quyền của một nhóm quyền",
         "operationId": "updateGroupPermissions",
@@ -2904,9 +2800,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "formIds"
-                ],
+                "required": ["formIds"],
                 "properties": {
                   "formIds": {
                     "type": "array",
@@ -2917,13 +2811,7 @@
                   }
                 },
                 "example": {
-                  "formIds": [
-                    1,
-                    2,
-                    3,
-                    5,
-                    8
-                  ]
+                  "formIds": [1, 2, 3, 5, 8]
                 }
               }
             }
@@ -2990,9 +2878,7 @@
     },
     "/phieucan": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân",
         "description": "Lấy toàn bộ danh sách phiếu cân trong hệ thống",
         "operationId": "getAllPhieucans",
@@ -3037,9 +2923,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Tạo phiếu cân mới",
         "description": "Tạo một phiếu cân mới trong hệ thống",
         "operationId": "createPhieucan",
@@ -3096,9 +2980,7 @@
     },
     "/phieucan/{id}": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy thông tin phiếu cân theo ID",
         "description": "Lấy chi tiết một phiếu cân dựa trên ID",
         "operationId": "getPhieucanById",
@@ -3148,9 +3030,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Cập nhật phiếu cân",
         "description": "Cập nhật thông tin phiếu cân dựa trên ID",
         "operationId": "updatePhieucan",
@@ -3253,9 +3133,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Xóa phiếu cân",
         "description": "Xóa một phiếu cân dựa trên ID",
         "operationId": "deletePhieucan",
@@ -3307,9 +3185,7 @@
     },
     "/phieucan/{id}/complete": {
       "post": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Hoàn thành cân",
         "description": "Cập nhật trọng lượng cân ra để hoàn thành phiếu cân",
         "operationId": "completeWeighing",
@@ -3374,9 +3250,7 @@
     },
     "/phieucan/{id}/cancel": {
       "post": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Hủy phiếu cân",
         "description": "Hủy phiếu cân với lý do",
         "operationId": "cancelPhieucan",
@@ -3441,9 +3315,7 @@
     },
     "/phieucan/status/completed": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân đã hoàn thành",
         "description": "Lấy danh sách phiếu cân đã hoàn thành (đã cân ra)",
         "operationId": "getCompletedWeighings",
@@ -3490,9 +3362,7 @@
     },
     "/phieucan/status/pending": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân đang chờ",
         "description": "Lấy danh sách phiếu cân đang chờ (chưa cân ra)",
         "operationId": "getPendingWeighings",
@@ -3539,9 +3409,7 @@
     },
     "/phieucan/status/canceled": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân đã hủy",
         "description": "Lấy danh sách phiếu cân đã hủy",
         "operationId": "getCanceledWeighings",
@@ -3588,9 +3456,7 @@
     },
     "/phieucan/date-range/search": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân theo khoảng thời gian",
         "description": "Lấy danh sách phiếu cân trong một khoảng thời gian",
         "operationId": "getPhieucansByDateRange",
@@ -3648,9 +3514,7 @@
     },
     "/phieucan/vehicle/{soxe}": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân theo biển số xe",
         "description": "Lấy danh sách phiếu cân của một biển số xe cụ thể",
         "operationId": "getPhieucansBySoxe",
@@ -3708,9 +3572,7 @@
     },
     "/phieucan/product/{mahang}": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân theo mã hàng",
         "description": "Lấy danh sách phiếu cân của một loại hàng hóa cụ thể",
         "operationId": "getPhieucansByProduct",
@@ -3768,9 +3630,7 @@
     },
     "/phieucan/customer/{makh}": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Lấy danh sách phiếu cân theo mã khách hàng",
         "description": "Lấy danh sách phiếu cân của một khách hàng cụ thể",
         "operationId": "getPhieucansByCustomer",
@@ -3828,9 +3688,7 @@
     },
     "/phieucan/statistics/today": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Thống kê phiếu cân trong ngày",
         "description": "Lấy thống kê về phiếu cân trong ngày hôm nay",
         "operationId": "getTodayStatistics",
@@ -3874,9 +3732,7 @@
     },
     "/phieucan/statistics/weight": {
       "get": {
-        "tags": [
-          "Phiếu Cân"
-        ],
+        "tags": ["Phiếu Cân"],
         "summary": "Thống kê trọng lượng theo khoảng thời gian",
         "description": "Lấy thống kê trọng lượng phiếu cân trong một khoảng thời gian",
         "operationId": "getWeightStatistics",
@@ -3931,9 +3787,7 @@
     },
     "/soxe": {
       "get": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Lấy danh sách số xe",
         "description": "Lấy toàn bộ danh sách số xe trong hệ thống",
         "operationId": "getAllSoxes",
@@ -3978,9 +3832,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Tạo số xe mới",
         "description": "Tạo một số xe mới trong hệ thống",
         "operationId": "createSoxe",
@@ -4037,9 +3889,7 @@
     },
     "/soxe/{id}": {
       "get": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Lấy thông tin số xe theo ID",
         "description": "Lấy chi tiết một số xe dựa trên ID",
         "operationId": "getSoxeById",
@@ -4089,9 +3939,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Cập nhật số xe",
         "description": "Cập nhật thông tin số xe dựa trên ID",
         "operationId": "updateSoxe",
@@ -4154,9 +4002,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Xóa số xe",
         "description": "Xóa một số xe dựa trên ID",
         "operationId": "deleteSoxe",
@@ -4208,9 +4054,7 @@
     },
     "/soxe/number/{soxe}": {
       "get": {
-        "tags": [
-          "Số Xe"
-        ],
+        "tags": ["Số Xe"],
         "summary": "Lấy thông tin số xe theo biển số",
         "description": "Lấy chi tiết một số xe dựa trên biển số",
         "operationId": "getSoxeBySoxe",

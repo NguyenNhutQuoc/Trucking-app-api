@@ -1,0 +1,494 @@
+# src/swagger/paths/tramcan-paths.yaml
+/tramcan/my-stations:
+  get:
+    tags:
+      - Trạm Cân
+    summary: Lấy danh sách trạm cân của tôi
+    description: |
+      Lấy danh sách trạm cân thuộc về khách hàng hiện tại.
+      Yêu cầu session token để xác định khách hàng.
+    operationId: getMyStations
+    security:
+      - sessionAuth: []
+    responses:
+      200:
+        description: Danh sách trạm cân của khách hàng
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách trạm cân của bạn"
+                data:
+                  type: object
+                  properties:
+                    khachHang:
+                      type: object
+                      properties:
+                        maKhachHang:
+                          type: string
+                          example: "ABC001"
+                        tenKhachHang:
+                          type: string
+                          example: "Công ty TNHH ABC"
+                    tramCans:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/TramCan"
+                    currentStation:
+                      type: object
+                      nullable: true
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        tenTramCan:
+                          type: string
+                          example: "Trạm cân số 1 - ABC"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+
+/tramcan/switch-station:
+  post:
+    tags:
+      - Trạm Cân
+    summary: Chuyển đổi trạm cân
+    description: |
+      Chuyển đổi trạm cân trong phiên làm việc hiện tại.
+      Tương tự như chọn trạm cân lần đầu nhưng không cần login lại.
+    operationId: switchStation
+    security:
+      - sessionAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - tramCanId
+            properties:
+              tramCanId:
+                type: number
+                description: ID của trạm cân muốn chuyển tới
+                example: 2
+    responses:
+      200:
+        description: Chuyển trạm cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Chuyển trạm cân thành công"
+                data:
+                  type: object
+                  properties:
+                    sessionToken:
+                      type: string
+                      description: Session token mới
+                      example: "session_1640996000000_xyz789abc123"
+                    selectedStation:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 2
+                        tenTramCan:
+                          type: string
+                          example: "Trạm cân số 2 - ABC"
+                    khachHang:
+                      type: object
+                      properties:
+                        maKhachHang:
+                          type: string
+                          example: "ABC001"
+                        tenKhachHang:
+                          type: string
+                          example: "Công ty TNHH ABC"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      400:
+        description: Trạm cân không hợp lệ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Trạm cân không thuộc về khách hàng này"
+
+/tramcan/{id}:
+  get:
+    tags:
+      - Trạm Cân
+    summary: Lấy chi tiết trạm cân
+    description: Lấy thông tin chi tiết của một trạm cân
+    operationId: getTramCanById
+    security:
+      - sessionAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID của trạm cân
+    responses:
+      200:
+        description: Chi tiết trạm cân
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Chi tiết trạm cân"
+                data:
+                  $ref: "#/components/schemas/TramCan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+  put:
+    tags:
+      - Trạm Cân (Admin)
+    summary: Cập nhật trạm cân (Admin)
+    description: Cập nhật thông tin trạm cân
+    operationId: updateTramCan
+    security:
+      - sessionAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID của trạm cân
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TramCanUpdate"
+    responses:
+      200:
+        description: Cập nhật trạm cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Cập nhật trạm cân thành công"
+                data:
+                  $ref: "#/components/schemas/TramCan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+
+  delete:
+    tags:
+      - Trạm Cân (Admin)
+    summary: Xóa trạm cân (Admin)
+    description: Xóa một trạm cân khỏi hệ thống
+    operationId: deleteTramCan
+    security:
+      - sessionAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID của trạm cân
+    responses:
+      200:
+        description: Xóa trạm cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Xóa trạm cân thành công"
+                data:
+                  type: "null"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        $ref: "#/components/responses/NotFoundError"
+
+/tramcan:
+  get:
+    tags:
+      - Trạm Cân (Admin)
+    summary: Lấy tất cả trạm cân (Admin)
+    description: Lấy danh sách tất cả trạm cân trong hệ thống (Chỉ admin)
+    operationId: getAllTramCans
+    security:
+      - sessionAuth: []
+    responses:
+      200:
+        description: Danh sách tất cả trạm cân
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Danh sách tất cả trạm cân"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/TramCan"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      403:
+        description: Không có quyền admin
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Quyền truy cập bị từ chối"
+
+  post:
+    tags:
+      - Trạm Cân (Admin)
+    summary: Tạo trạm cân mới (Admin)
+    description: Tạo một trạm cân mới trong hệ thống
+    operationId: createTramCan
+    security:
+      - sessionAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TramCanCreate"
+    responses:
+      201:
+        description: Tạo trạm cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Tạo trạm cân thành công"
+                data:
+                  $ref: "#/components/schemas/TramCan"
+      400:
+        $ref: "#/components/responses/ValidationError"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+# src/swagger/schemas/TramCan.yaml
+TramCan:
+  type: object
+  properties:
+    id:
+      type: number
+      description: ID tự động tạo của trạm cân
+    khachHangId:
+      type: number
+      description: ID khách hàng sở hữu
+    maTramCan:
+      type: string
+      description: Mã trạm cân
+    tenTramCan:
+      type: string
+      description: Tên trạm cân
+    diaChi:
+      type: string
+      description: Địa chỉ trạm cân
+    dbHost:
+      type: string
+      description: Host database
+    dbPort:
+      type: number
+      description: Port database
+    dbName:
+      type: string
+      description: Tên database
+    dbUsername:
+      type: string
+      description: Username database
+    dbPassword:
+      type: string
+      description: Password database (ẩn trong response)
+    dbInstanceName:
+      type: string
+      description: Instance name (cho MSSQL)
+    trangThai:
+      type: number
+      description: Trạng thái (1 = hoạt động, 0 = vô hiệu)
+    ngayTao:
+      type: string
+      format: date-time
+      description: Ngày tạo
+    ngayCapNhat:
+      type: string
+      format: date-time
+      description: Ngày cập nhật cuối
+  example:
+    id: 1
+    khachHangId: 1
+    maTramCan: "TRAM01"
+    tenTramCan: "Trạm cân số 1 - ABC"
+    diaChi: "123 Đường ABC, Q1, HCM"
+    dbHost: "localhost"
+    dbPort: 1433
+    dbName: "TruckWeighing_ABC_TRAM01"
+    dbUsername: "sa"
+    dbPassword: "********"
+    dbInstanceName: "SQLEXPRESS01"
+    trangThai: 1
+    ngayTao: "2025-01-01T00:00:00Z"
+    ngayCapNhat: "2025-01-01T00:00:00Z"
+
+TramCanCreate:
+  type: object
+  required:
+    - khachHangId
+    - maTramCan
+    - tenTramCan
+    - dbHost
+    - dbName
+    - dbUsername
+    - dbPassword
+  properties:
+    khachHangId:
+      type: number
+      description: ID khách hàng sở hữu
+    maTramCan:
+      type: string
+      description: Mã trạm cân
+    tenTramCan:
+      type: string
+      description: Tên trạm cân
+    diaChi:
+      type: string
+      description: Địa chỉ trạm cân
+    dbHost:
+      type: string
+      description: Host database
+    dbPort:
+      type: number
+      description: Port database
+    dbName:
+      type: string
+      description: Tên database
+    dbUsername:
+      type: string
+      description: Username database
+    dbPassword:
+      type: string
+      description: Password database
+    dbInstanceName:
+      type: string
+      description: Instance name (cho MSSQL)
+  example:
+    khachHangId: 1
+    maTramCan: "TRAM03"
+    tenTramCan: "Trạm cân số 3 - ABC"
+    diaChi: "789 Đường GHI, Q3, HCM"
+    dbHost: "localhost"
+    dbPort: 1433
+    dbName: "TruckWeighing_ABC_TRAM03"
+    dbUsername: "sa"
+    dbPassword: "password123"
+    dbInstanceName: "SQLEXPRESS01"
+
+TramCanUpdate:
+  type: object
+  properties:
+    maTramCan:
+      type: string
+      description: Mã trạm cân
+    tenTramCan:
+      type: string
+      description: Tên trạm cân
+    diaChi:
+      type: string
+      description: Địa chỉ trạm cân
+    dbHost:
+      type: string
+      description: Host database
+    dbPort:
+      type: number
+      description: Port database
+    dbName:
+      type: string
+      description: Tên database
+    dbUsername:
+      type: string
+      description: Username database
+    dbPassword:
+      type: string
+      description: Password database
+    dbInstanceName:
+      type: string
+      description: Instance name (cho MSSQL)
+    trangThai:
+      type: number
+      description: Trạng thái (1 = hoạt động, 0 = vô hiệu)
+  example:
+    tenTramCan: "Trạm cân số 1 - ABC (Cập nhật)"
+    diaChi: "123 Đường ABC mới, Q1, HCM"
+    trangThai: 1
+
+# Security scheme for session token
+components:
+  securitySchemes:
+    sessionAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Session
+      description: |
+        Session token nhận được từ login flow.
+        Có thể gửi qua header: 
+        - Authorization: Bearer {sessionToken}
+        - X-Session-Token: {sessionToken}

@@ -37,7 +37,7 @@ loadEnvironmentFiles();
 
 export const config = {
   // Application
-  port: parseInt(process.env.PORT || "3001", 10),
+  port: parseInt(process.env.PORT || "3002", 10),
   nodeEnv: nodeEnv,
   apiPrefix: process.env.API_PREFIX || "/api/v1",
 
@@ -47,7 +47,7 @@ export const config = {
   dbUsername: process.env.DB_USERNAME || "sa",
   dbPassword: process.env.DB_PASSWORD || "",
   dbName: process.env.DB_NAME || "TruckWeighing",
-  dbInstanceName: process.env.DB_INSTANCE_NAME || "SQLEXPRESS01",
+  dbInstanceName: process.env.DB_INSTANCE_NAME || "",
 
   // Authentication
   jwtSecret: process.env.JWT_SECRET || "your-jwt-secret-key",

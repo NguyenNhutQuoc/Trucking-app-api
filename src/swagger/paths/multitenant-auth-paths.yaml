@@ -1,0 +1,311 @@
+# src/swagger/paths/multitenant-auth-paths.yaml
+/auth/tenant-login:
+  post:
+    tags:
+      - Multi-Tenant Authentication
+    summary: Đăng nhập bằng mã khách hàng
+    description: |
+      Bước 1: Đăng nhập bằng mã khách hàng và password.
+      Trả về danh sách trạm cân để khách hàng chọn.
+    operationId: tenantLogin
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - maKhachHang
+              - password
+            properties:
+              maKhachHang:
+                type: string
+                description: Mã khách hàng do admin cấp
+                example: "ABC001"
+              password:
+                type: string
+                description: Mật khẩu do admin cấp
+                example: "abc123456"
+    responses:
+      200:
+        description: Đăng nhập thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Đăng nhập thành công. Vui lòng chọn trạm cân."
+                data:
+                  type: object
+                  properties:
+                    sessionToken:
+                      type: string
+                      description: Session token mới cho phiên làm việc
+                      example: "session_1640995800000_def456ghi789"
+                    selectedStation:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        tenTramCan:
+                          type: string
+                          example: "Trạm cân số 1 - ABC"
+                        dbConfig:
+                          type: object
+                          description: Thông tin kết nối database (ẩn trong response thực tế)
+                    khachHang:
+                      type: object
+                      properties:
+                        maKhachHang:
+                          type: string
+                          example: "ABC001"
+                        tenKhachHang:
+                          type: string
+                          example: "Công ty TNHH ABC"
+      401:
+        description: Session không hợp lệ hoặc trạm cân không thuộc về khách hàng
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Session không hợp lệ hoặc đã hết hạn"
+
+/auth/validate-session:
+  post:
+    tags:
+      - Multi-Tenant Authentication
+    summary: Validate session
+    description: Kiểm tra session có hợp lệ không và lấy thông tin tenant
+    operationId: validateSession
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sessionToken
+            properties:
+              sessionToken:
+                type: string
+                description: Session token cần validate
+                example: "session_1640995800000_def456ghi789"
+    responses:
+      200:
+        description: Session hợp lệ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Session hợp lệ"
+                data:
+                  type: object
+                  properties:
+                    khachHang:
+                      type: object
+                      properties:
+                        maKhachHang:
+                          type: string
+                          example: "ABC001"
+                        tenKhachHang:
+                          type: string
+                          example: "Công ty TNHH ABC"
+                    tramCan:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        tenTramCan:
+                          type: string
+                          example: "Trạm cân số 1 - ABC"
+
+/auth/logout:
+  post:
+    tags:
+      - Multi-Tenant Authentication
+    summary: Đăng xuất
+    description: Vô hiệu hóa session hiện tại
+    operationId: logout
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sessionToken
+            properties:
+              sessionToken:
+                type: string
+                description: Session token cần đăng xuất
+                example: "session_1640995800000_def456ghi789"
+    responses:
+      200:
+        description: Đăng xuất thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Đăng xuất thành công"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+
+/auth/refresh-session:
+  post:
+    tags:
+      - Multi-Tenant Authentication
+    summary: Gia hạn session
+    description: Gia hạn thời gian sử dụng của session
+    operationId: refreshSession
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sessionToken
+            properties:
+              sessionToken:
+                type: string
+                description: Session token cần gia hạn
+                example: "session_1640995800000_def456ghi789"
+    responses:
+      200:
+        description: Gia hạn session thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Gia hạn session thành công"
+                data:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true Session token tạm thời
+                    khachHang:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        maKhachHang:
+                          type: string
+                          example: "ABC001"
+                        tenKhachHang:
+                          type: string
+                          example: "Công ty TNHH ABC"
+                    tramCans:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            example: 1
+                          maTramCan:
+                            type: string
+                            example: "TRAM01"
+                          tenTramCan:
+                            type: string
+                            example: "Trạm cân số 1 - ABC"
+                          diaChi:
+                            type: string
+                            example: "123 Đường ABC, Q1, HCM"
+      401:
+        description: Thông tin đăng nhập không đúng
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: "Mã khách hàng hoặc mật khẩu không đúng"
+
+/auth/select-station:
+  post:
+    tags:
+      - Multi-Tenant Authentication
+    summary: Chọn trạm cân
+    description: |
+      Bước 2: Chọn trạm cân để hoàn thành quá trình đăng nhập.
+      Sau bước này, hệ thống sẽ kết nối tới database của trạm cân được chọn.
+    operationId: selectStation
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sessionToken
+              - tramCanId
+            properties:
+              sessionToken:
+                type: string
+                description: Session token từ bước đăng nhập
+                example: "session_1640995200000_abc123def456"
+              tramCanId:
+                type: number
+                description: ID của trạm cân được chọn
+                example: 1
+    responses:
+      200:
+        description: Chọn trạm cân thành công
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: "Chọn trạm cân thành công"
+                data:
+                  type: object
+                  properties:
+                    sessionToken:
+                      type: string
+                      description:
