@@ -133,7 +133,10 @@
       },
       "Hanghoa": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "id": {
             "type": "number",
@@ -161,7 +164,10 @@
       },
       "HanghoaCreate": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "ma": {
             "type": "string",
@@ -267,7 +273,10 @@
       },
       "Khachhang": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "id": {
             "type": "number",
@@ -300,7 +309,10 @@
       },
       "KhachhangCreate": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "ma": {
             "type": "string",
@@ -393,7 +405,11 @@
       },
       "Nhanvien": {
         "type": "object",
-        "required": ["nvId", "tenNV", "matkhau"],
+        "required": [
+          "nvId",
+          "tenNV",
+          "matkhau"
+        ],
         "properties": {
           "nvId": {
             "type": "string",
@@ -431,7 +447,11 @@
       },
       "NhanvienCreate": {
         "type": "object",
-        "required": ["nvId", "tenNV", "matkhau"],
+        "required": [
+          "nvId",
+          "tenNV",
+          "matkhau"
+        ],
         "properties": {
           "nvId": {
             "type": "string",
@@ -556,7 +576,10 @@
       },
       "NhomQuyen": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "nhomId": {
             "type": "number",
@@ -579,7 +602,10 @@
       },
       "NhomQuyenCreate": {
         "type": "object",
-        "required": ["ma", "ten"],
+        "required": [
+          "ma",
+          "ten"
+        ],
         "properties": {
           "ma": {
             "type": "string",
@@ -661,7 +687,9 @@
       },
       "Phieucan": {
         "type": "object",
-        "required": ["soxe"],
+        "required": [
+          "soxe"
+        ],
         "properties": {
           "stt": {
             "type": "number",
@@ -761,7 +789,9 @@
       },
       "PhieucanCreate": {
         "type": "object",
-        "required": ["soxe"],
+        "required": [
+          "soxe"
+        ],
         "properties": {
           "sophieu": {
             "type": "number",
@@ -823,7 +853,9 @@
       },
       "PhieucanComplete": {
         "type": "object",
-        "required": ["tlcan2"],
+        "required": [
+          "tlcan2"
+        ],
         "properties": {
           "tlcan2": {
             "type": "number",
@@ -842,7 +874,9 @@
       },
       "PhieucanCancel": {
         "type": "object",
-        "required": ["reason"],
+        "required": [
+          "reason"
+        ],
         "properties": {
           "reason": {
             "type": "string",
@@ -972,7 +1006,10 @@
       },
       "Quyen": {
         "type": "object",
-        "required": ["nhomId", "formId"],
+        "required": [
+          "nhomId",
+          "formId"
+        ],
         "properties": {
           "quyenId": {
             "type": "number",
@@ -1005,7 +1042,10 @@
       },
       "QuyenCreate": {
         "type": "object",
-        "required": ["nhomId", "formId"],
+        "required": [
+          "nhomId",
+          "formId"
+        ],
         "properties": {
           "nhomId": {
             "type": "number",
@@ -1023,7 +1063,9 @@
       },
       "Soxe": {
         "type": "object",
-        "required": ["soxe"],
+        "required": [
+          "soxe"
+        ],
         "properties": {
           "id": {
             "type": "number",
@@ -1046,7 +1088,9 @@
       },
       "SoxeCreate": {
         "type": "object",
-        "required": ["soxe"],
+        "required": [
+          "soxe"
+        ],
         "properties": {
           "soxe": {
             "type": "string",
@@ -1114,7 +1158,9 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Đăng nhập vào hệ thống",
         "description": "Đăng nhập bằng tên đăng nhập và mật khẩu",
         "operationId": "login",
@@ -1124,7 +1170,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["username", "password"],
+                "required": [
+                  "username",
+                  "password"
+                ],
                 "properties": {
                   "username": {
                     "type": "string",
@@ -1201,7 +1250,9 @@
     },
     "/auth/validate-token": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Kiểm tra tính hợp lệ của token",
         "description": "Kiểm tra xem token hiện tại có hợp lệ hay không",
         "operationId": "validateToken",
@@ -1251,7 +1302,9 @@
     },
     "/auth/change-password": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Đổi mật khẩu",
         "description": "Đổi mật khẩu của người dùng hiện tại",
         "operationId": "changePassword",
@@ -1266,7 +1319,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["currentPassword", "newPassword"],
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
                 "properties": {
                   "currentPassword": {
                     "type": "string",
@@ -1326,7 +1382,9 @@
     },
     "/auth/permissions": {
       "get": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Lấy quyền của người dùng",
         "description": "Lấy danh sách quyền của người dùng hiện tại",
         "operationId": "getUserPermissions",
@@ -1373,7 +1431,9 @@
     },
     "/hanghoa": {
       "get": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Lấy danh sách hàng hóa",
         "description": "Lấy toàn bộ danh sách hàng hóa trong hệ thống",
         "operationId": "getAllHanghoas",
@@ -1418,7 +1478,9 @@
         }
       },
       "post": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Tạo hàng hóa mới",
         "description": "Tạo một mặt hàng mới trong hệ thống",
         "operationId": "createHanghoa",
@@ -1475,7 +1537,9 @@
     },
     "/hanghoa/search": {
       "get": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Tìm kiếm hàng hóa theo tên",
         "description": "Tìm kiếm hàng hóa theo tên hoặc trả về tất cả nếu không có từ khóa",
         "operationId": "searchHanghoaByName",
@@ -1533,7 +1597,9 @@
     },
     "/hanghoa/{id}": {
       "get": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Lấy thông tin hàng hóa theo ID",
         "description": "Lấy chi tiết một hàng hóa dựa trên ID",
         "operationId": "getHanghoaById",
@@ -1583,7 +1649,9 @@
         }
       },
       "put": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Cập nhật hàng hóa",
         "description": "Cập nhật thông tin hàng hóa dựa trên ID",
         "operationId": "updateHanghoa",
@@ -1646,7 +1714,9 @@
         }
       },
       "delete": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Xóa hàng hóa",
         "description": "Xóa một hàng hóa dựa trên ID",
         "operationId": "deleteHanghoa",
@@ -1698,7 +1768,9 @@
     },
     "/hanghoa/code/{ma}": {
       "get": {
-        "tags": ["Hàng Hóa"],
+        "tags": [
+          "Hàng Hóa"
+        ],
         "summary": "Lấy thông tin hàng hóa theo mã",
         "description": "Lấy chi tiết một hàng hóa dựa trên mã",
         "operationId": "getHanghoaByMa",
@@ -1756,7 +1828,9 @@
     },
     "/khachhang": {
       "get": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Lấy danh sách khách hàng",
         "description": "Lấy toàn bộ danh sách khách hàng trong hệ thống",
         "operationId": "getAllKhachhangs",
@@ -1801,7 +1875,9 @@
         }
       },
       "post": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Tạo khách hàng mới",
         "description": "Tạo một khách hàng mới trong hệ thống",
         "operationId": "createKhachhang",
@@ -1858,7 +1934,9 @@
     },
     "/khachhang/search": {
       "get": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Tìm kiếm khách hàng theo tên",
         "description": "Tìm kiếm khách hàng theo tên hoặc trả về tất cả nếu không có từ khóa",
         "operationId": "searchKhachhangByName",
@@ -1916,7 +1994,9 @@
     },
     "/khachhang/{id}": {
       "get": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Lấy thông tin khách hàng theo ID",
         "description": "Lấy chi tiết một khách hàng dựa trên ID",
         "operationId": "getKhachhangById",
@@ -1966,7 +2046,9 @@
         }
       },
       "put": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Cập nhật khách hàng",
         "description": "Cập nhật thông tin khách hàng dựa trên ID",
         "operationId": "updateKhachhang",
@@ -2029,7 +2111,9 @@
         }
       },
       "delete": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Xóa khách hàng",
         "description": "Xóa một khách hàng dựa trên ID",
         "operationId": "deleteKhachhang",
@@ -2081,7 +2165,9 @@
     },
     "/khachhang/code/{ma}": {
       "get": {
-        "tags": ["Khách Hàng"],
+        "tags": [
+          "Khách Hàng"
+        ],
         "summary": "Lấy thông tin khách hàng theo mã",
         "description": "Lấy chi tiết một khách hàng dựa trên mã",
         "operationId": "getKhachhangByMa",
@@ -2137,9 +2223,462 @@
         }
       }
     },
+    "/auth/tenant-login": {
+      "post": {
+        "tags": [
+          "Multi-Tenant Authentication"
+        ],
+        "summary": "Đăng nhập bằng mã khách hàng",
+        "description": "Bước 1: Đăng nhập bằng mã khách hàng và password.\nTrả về danh sách trạm cân để khách hàng chọn.\n",
+        "operationId": "tenantLogin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "maKhachHang",
+                  "password"
+                ],
+                "properties": {
+                  "maKhachHang": {
+                    "type": "string",
+                    "description": "Mã khách hàng do admin cấp",
+                    "example": "ABC001"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Mật khẩu do admin cấp",
+                    "example": "abc123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Đăng nhập thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Đăng nhập thành công. Vui lòng chọn trạm cân."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionToken": {
+                          "type": "string",
+                          "description": "Session token mới cho phiên làm việc",
+                          "example": "session_1640995800000_def456ghi789"
+                        },
+                        "selectedStation": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "tenTramCan": {
+                              "type": "string",
+                              "example": "Trạm cân số 1 - ABC"
+                            },
+                            "dbConfig": {
+                              "type": "object",
+                              "description": "Thông tin kết nối database (ẩn trong response thực tế)"
+                            }
+                          }
+                        },
+                        "khachHang": {
+                          "type": "object",
+                          "properties": {
+                            "maKhachHang": {
+                              "type": "string",
+                              "example": "ABC001"
+                            },
+                            "tenKhachHang": {
+                              "type": "string",
+                              "example": "Công ty TNHH ABC"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session không hợp lệ hoặc trạm cân không thuộc về khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session không hợp lệ hoặc đã hết hạn"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/validate-session": {
+      "post": {
+        "tags": [
+          "Multi-Tenant Authentication"
+        ],
+        "summary": "Validate session",
+        "description": "Kiểm tra session có hợp lệ không và lấy thông tin tenant",
+        "operationId": "validateSession",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "Session token cần validate",
+                    "example": "session_1640995800000_def456ghi789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session hợp lệ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session hợp lệ"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "khachHang": {
+                          "type": "object",
+                          "properties": {
+                            "maKhachHang": {
+                              "type": "string",
+                              "example": "ABC001"
+                            },
+                            "tenKhachHang": {
+                              "type": "string",
+                              "example": "Công ty TNHH ABC"
+                            }
+                          }
+                        },
+                        "tramCan": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "tenTramCan": {
+                              "type": "string",
+                              "example": "Trạm cân số 1 - ABC"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Multi-Tenant Authentication"
+        ],
+        "summary": "Đăng xuất",
+        "description": "Vô hiệu hóa session hiện tại",
+        "operationId": "logout",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "Session token cần đăng xuất",
+                    "example": "session_1640995800000_def456ghi789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Đăng xuất thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Đăng xuất thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh-session": {
+      "post": {
+        "tags": [
+          "Multi-Tenant Authentication"
+        ],
+        "summary": "Gia hạn session",
+        "description": "Gia hạn thời gian sử dụng của session",
+        "operationId": "refreshSession",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "Session token cần gia hạn",
+                    "example": "session_1640995800000_def456ghi789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gia hạn session thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Gia hạn session thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": "true Session token tạm thời"
+                        },
+                        "khachHang": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "maKhachHang": {
+                              "type": "string",
+                              "example": "ABC001"
+                            },
+                            "tenKhachHang": {
+                              "type": "string",
+                              "example": "Công ty TNHH ABC"
+                            }
+                          }
+                        },
+                        "tramCans": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number",
+                                "example": 1
+                              },
+                              "maTramCan": {
+                                "type": "string",
+                                "example": "TRAM01"
+                              },
+                              "tenTramCan": {
+                                "type": "string",
+                                "example": "Trạm cân số 1 - ABC"
+                              },
+                              "diaChi": {
+                                "type": "string",
+                                "example": "123 Đường ABC, Q1, HCM"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Thông tin đăng nhập không đúng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Mã khách hàng hoặc mật khẩu không đúng"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/select-station": {
+      "post": {
+        "tags": [
+          "Multi-Tenant Authentication"
+        ],
+        "summary": "Chọn trạm cân",
+        "description": "Bước 2: Chọn trạm cân để hoàn thành quá trình đăng nhập.\nSau bước này, hệ thống sẽ kết nối tới database của trạm cân được chọn.\n",
+        "operationId": "selectStation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "tramCanId"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "Session token từ bước đăng nhập",
+                    "example": "session_1640995200000_abc123def456"
+                  },
+                  "tramCanId": {
+                    "type": "number",
+                    "description": "ID của trạm cân được chọn",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chọn trạm cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chọn trạm cân thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionToken": {
+                          "type": "string",
+                          "description": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/nhanvien": {
       "get": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Lấy danh sách nhân viên",
         "description": "Lấy toàn bộ danh sách nhân viên trong hệ thống",
         "operationId": "getAllNhanviens",
@@ -2204,7 +2743,9 @@
         }
       },
       "post": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Tạo nhân viên mới",
         "description": "Tạo một nhân viên mới trong hệ thống",
         "operationId": "createNhanvien",
@@ -2281,7 +2822,9 @@
     },
     "/nhanvien/{id}": {
       "get": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Lấy thông tin nhân viên theo ID",
         "description": "Lấy chi tiết một nhân viên dựa trên ID",
         "operationId": "getNhanvienById",
@@ -2357,7 +2900,9 @@
         }
       },
       "put": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Cập nhật nhân viên",
         "description": "Cập nhật thông tin nhân viên dựa trên ID",
         "operationId": "updateNhanvien",
@@ -2446,7 +2991,9 @@
         }
       },
       "delete": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Xóa nhân viên",
         "description": "Xóa một nhân viên dựa trên ID",
         "operationId": "deleteNhanvien",
@@ -2524,7 +3071,9 @@
     },
     "/nhanvien/{id}/permissions": {
       "get": {
-        "tags": ["Nhân Viên"],
+        "tags": [
+          "Nhân Viên"
+        ],
         "summary": "Lấy danh sách quyền của nhân viên",
         "description": "Lấy chi tiết quyền của một nhân viên dựa trên ID",
         "operationId": "getNhanvienPermissions",
@@ -2602,7 +3151,9 @@
     },
     "/nhomquyen/{nhomId}/permissions/{formId}": {
       "post": {
-        "tags": ["Nhóm Quyền"],
+        "tags": [
+          "Nhóm Quyền"
+        ],
         "summary": "Thêm quyền vào nhóm quyền",
         "description": "Thêm một quyền (form) vào nhóm quyền",
         "operationId": "addPermissionToGroup",
@@ -2687,7 +3238,9 @@
         }
       },
       "delete": {
-        "tags": ["Nhóm Quyền"],
+        "tags": [
+          "Nhóm Quyền"
+        ],
         "summary": "Xóa quyền khỏi nhóm quyền",
         "description": "Xóa một quyền (form) khỏi nhóm quyền",
         "operationId": "removePermissionFromGroup",
@@ -2774,7 +3327,9 @@
     },
     "/nhomquyen/{nhomId}/permissions": {
       "put": {
-        "tags": ["Nhóm Quyền"],
+        "tags": [
+          "Nhóm Quyền"
+        ],
         "summary": "Cập nhật danh sách quyền của nhóm",
         "description": "Cập nhật toàn bộ danh sách quyền của một nhóm quyền",
         "operationId": "updateGroupPermissions",
@@ -2800,7 +3355,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["formIds"],
+                "required": [
+                  "formIds"
+                ],
                 "properties": {
                   "formIds": {
                     "type": "array",
@@ -2811,7 +3368,13 @@
                   }
                 },
                 "example": {
-                  "formIds": [1, 2, 3, 5, 8]
+                  "formIds": [
+                    1,
+                    2,
+                    3,
+                    5,
+                    8
+                  ]
                 }
               }
             }
@@ -2878,7 +3441,9 @@
     },
     "/phieucan": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân",
         "description": "Lấy toàn bộ danh sách phiếu cân trong hệ thống",
         "operationId": "getAllPhieucans",
@@ -2923,7 +3488,9 @@
         }
       },
       "post": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Tạo phiếu cân mới",
         "description": "Tạo một phiếu cân mới trong hệ thống",
         "operationId": "createPhieucan",
@@ -2980,7 +3547,9 @@
     },
     "/phieucan/{id}": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy thông tin phiếu cân theo ID",
         "description": "Lấy chi tiết một phiếu cân dựa trên ID",
         "operationId": "getPhieucanById",
@@ -3030,7 +3599,9 @@
         }
       },
       "put": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Cập nhật phiếu cân",
         "description": "Cập nhật thông tin phiếu cân dựa trên ID",
         "operationId": "updatePhieucan",
@@ -3133,7 +3704,9 @@
         }
       },
       "delete": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Xóa phiếu cân",
         "description": "Xóa một phiếu cân dựa trên ID",
         "operationId": "deletePhieucan",
@@ -3185,7 +3758,9 @@
     },
     "/phieucan/{id}/complete": {
       "post": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Hoàn thành cân",
         "description": "Cập nhật trọng lượng cân ra để hoàn thành phiếu cân",
         "operationId": "completeWeighing",
@@ -3250,7 +3825,9 @@
     },
     "/phieucan/{id}/cancel": {
       "post": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Hủy phiếu cân",
         "description": "Hủy phiếu cân với lý do",
         "operationId": "cancelPhieucan",
@@ -3315,7 +3892,9 @@
     },
     "/phieucan/status/completed": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân đã hoàn thành",
         "description": "Lấy danh sách phiếu cân đã hoàn thành (đã cân ra)",
         "operationId": "getCompletedWeighings",
@@ -3362,7 +3941,9 @@
     },
     "/phieucan/status/pending": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân đang chờ",
         "description": "Lấy danh sách phiếu cân đang chờ (chưa cân ra)",
         "operationId": "getPendingWeighings",
@@ -3409,7 +3990,9 @@
     },
     "/phieucan/status/canceled": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân đã hủy",
         "description": "Lấy danh sách phiếu cân đã hủy",
         "operationId": "getCanceledWeighings",
@@ -3456,7 +4039,9 @@
     },
     "/phieucan/date-range/search": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân theo khoảng thời gian",
         "description": "Lấy danh sách phiếu cân trong một khoảng thời gian",
         "operationId": "getPhieucansByDateRange",
@@ -3514,7 +4099,9 @@
     },
     "/phieucan/vehicle/{soxe}": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân theo biển số xe",
         "description": "Lấy danh sách phiếu cân của một biển số xe cụ thể",
         "operationId": "getPhieucansBySoxe",
@@ -3572,7 +4159,9 @@
     },
     "/phieucan/product/{mahang}": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân theo mã hàng",
         "description": "Lấy danh sách phiếu cân của một loại hàng hóa cụ thể",
         "operationId": "getPhieucansByProduct",
@@ -3630,7 +4219,9 @@
     },
     "/phieucan/customer/{makh}": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Lấy danh sách phiếu cân theo mã khách hàng",
         "description": "Lấy danh sách phiếu cân của một khách hàng cụ thể",
         "operationId": "getPhieucansByCustomer",
@@ -3688,7 +4279,9 @@
     },
     "/phieucan/statistics/today": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Thống kê phiếu cân trong ngày",
         "description": "Lấy thống kê về phiếu cân trong ngày hôm nay",
         "operationId": "getTodayStatistics",
@@ -3732,7 +4325,9 @@
     },
     "/phieucan/statistics/weight": {
       "get": {
-        "tags": ["Phiếu Cân"],
+        "tags": [
+          "Phiếu Cân"
+        ],
         "summary": "Thống kê trọng lượng theo khoảng thời gian",
         "description": "Lấy thống kê trọng lượng phiếu cân trong một khoảng thời gian",
         "operationId": "getWeightStatistics",
@@ -3787,7 +4382,9 @@
     },
     "/soxe": {
       "get": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Lấy danh sách số xe",
         "description": "Lấy toàn bộ danh sách số xe trong hệ thống",
         "operationId": "getAllSoxes",
@@ -3832,7 +4429,9 @@
         }
       },
       "post": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Tạo số xe mới",
         "description": "Tạo một số xe mới trong hệ thống",
         "operationId": "createSoxe",
@@ -3889,7 +4488,9 @@
     },
     "/soxe/{id}": {
       "get": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Lấy thông tin số xe theo ID",
         "description": "Lấy chi tiết một số xe dựa trên ID",
         "operationId": "getSoxeById",
@@ -3939,7 +4540,9 @@
         }
       },
       "put": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Cập nhật số xe",
         "description": "Cập nhật thông tin số xe dựa trên ID",
         "operationId": "updateSoxe",
@@ -4002,7 +4605,9 @@
         }
       },
       "delete": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Xóa số xe",
         "description": "Xóa một số xe dựa trên ID",
         "operationId": "deleteSoxe",
@@ -4054,7 +4659,9 @@
     },
     "/soxe/number/{soxe}": {
       "get": {
-        "tags": ["Số Xe"],
+        "tags": [
+          "Số Xe"
+        ],
         "summary": "Lấy thông tin số xe theo biển số",
         "description": "Lấy chi tiết một số xe dựa trên biển số",
         "operationId": "getSoxeBySoxe",
@@ -4107,6 +4714,705 @@
           "500": {
             "$ref": "#/components/responses/InternalServerError"
           }
+        }
+      }
+    },
+    "/tramcan/my-stations": {
+      "get": {
+        "tags": [
+          "Trạm Cân"
+        ],
+        "summary": "Lấy danh sách trạm cân của tôi",
+        "description": "Lấy danh sách trạm cân thuộc về khách hàng hiện tại.\nYêu cầu session token để xác định khách hàng.\n",
+        "operationId": "getMyStations",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách trạm cân của khách hàng",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách trạm cân của bạn"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "khachHang": {
+                          "type": "object",
+                          "properties": {
+                            "maKhachHang": {
+                              "type": "string",
+                              "example": "ABC001"
+                            },
+                            "tenKhachHang": {
+                              "type": "string",
+                              "example": "Công ty TNHH ABC"
+                            }
+                          }
+                        },
+                        "tramCans": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TramCan"
+                          }
+                        },
+                        "currentStation": {
+                          "type": "object",
+                          "nullable": true,
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "tenTramCan": {
+                              "type": "string",
+                              "example": "Trạm cân số 1 - ABC"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/tramcan/switch-station": {
+      "post": {
+        "tags": [
+          "Trạm Cân"
+        ],
+        "summary": "Chuyển đổi trạm cân",
+        "description": "Chuyển đổi trạm cân trong phiên làm việc hiện tại.\nTương tự như chọn trạm cân lần đầu nhưng không cần login lại.\n",
+        "operationId": "switchStation",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "tramCanId"
+                ],
+                "properties": {
+                  "tramCanId": {
+                    "type": "number",
+                    "description": "ID của trạm cân muốn chuyển tới",
+                    "example": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chuyển trạm cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chuyển trạm cân thành công"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionToken": {
+                          "type": "string",
+                          "description": "Session token mới",
+                          "example": "session_1640996000000_xyz789abc123"
+                        },
+                        "selectedStation": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "example": 2
+                            },
+                            "tenTramCan": {
+                              "type": "string",
+                              "example": "Trạm cân số 2 - ABC"
+                            }
+                          }
+                        },
+                        "khachHang": {
+                          "type": "object",
+                          "properties": {
+                            "maKhachHang": {
+                              "type": "string",
+                              "example": "ABC001"
+                            },
+                            "tenKhachHang": {
+                              "type": "string",
+                              "example": "Công ty TNHH ABC"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Trạm cân không hợp lệ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Trạm cân không thuộc về khách hàng này"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/tramcan/{id}": {
+      "get": {
+        "tags": [
+          "Trạm Cân"
+        ],
+        "summary": "Lấy chi tiết trạm cân",
+        "description": "Lấy thông tin chi tiết của một trạm cân",
+        "operationId": "getTramCanById",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID của trạm cân"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết trạm cân",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Chi tiết trạm cân"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TramCan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trạm Cân (Admin)"
+        ],
+        "summary": "Cập nhật trạm cân (Admin)",
+        "description": "Cập nhật thông tin trạm cân",
+        "operationId": "updateTramCan",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID của trạm cân"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TramCanUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật trạm cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cập nhật trạm cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TramCan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trạm Cân (Admin)"
+        ],
+        "summary": "Xóa trạm cân (Admin)",
+        "description": "Xóa một trạm cân khỏi hệ thống",
+        "operationId": "deleteTramCan",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "ID của trạm cân"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa trạm cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Xóa trạm cân thành công"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/tramcan": {
+      "get": {
+        "tags": [
+          "Trạm Cân (Admin)"
+        ],
+        "summary": "Lấy tất cả trạm cân (Admin)",
+        "description": "Lấy danh sách tất cả trạm cân trong hệ thống (Chỉ admin)",
+        "operationId": "getAllTramCans",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Danh sách tất cả trạm cân",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Danh sách tất cả trạm cân"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TramCan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "description": "Không có quyền admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Quyền truy cập bị từ chối"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trạm Cân (Admin)"
+        ],
+        "summary": "Tạo trạm cân mới (Admin)",
+        "description": "Tạo một trạm cân mới trong hệ thống",
+        "operationId": "createTramCan",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TramCanCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo trạm cân thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Tạo trạm cân thành công"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TramCan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "TramCan": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "ID tự động tạo của trạm cân"
+        },
+        "khachHangId": {
+          "type": "number",
+          "description": "ID khách hàng sở hữu"
+        },
+        "maTramCan": {
+          "type": "string",
+          "description": "Mã trạm cân"
+        },
+        "tenTramCan": {
+          "type": "string",
+          "description": "Tên trạm cân"
+        },
+        "diaChi": {
+          "type": "string",
+          "description": "Địa chỉ trạm cân"
+        },
+        "dbHost": {
+          "type": "string",
+          "description": "Host database"
+        },
+        "dbPort": {
+          "type": "number",
+          "description": "Port database"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "Tên database"
+        },
+        "dbUsername": {
+          "type": "string",
+          "description": "Username database"
+        },
+        "dbPassword": {
+          "type": "string",
+          "description": "Password database (ẩn trong response)"
+        },
+        "dbInstanceName": {
+          "type": "string",
+          "description": "Instance name (cho MSSQL)"
+        },
+        "trangThai": {
+          "type": "number",
+          "description": "Trạng thái (1 = hoạt động, 0 = vô hiệu)"
+        },
+        "ngayTao": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Ngày tạo"
+        },
+        "ngayCapNhat": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Ngày cập nhật cuối"
+        }
+      },
+      "example": {
+        "id": 1,
+        "khachHangId": 1,
+        "maTramCan": "TRAM01",
+        "tenTramCan": "Trạm cân số 1 - ABC",
+        "diaChi": "123 Đường ABC, Q1, HCM",
+        "dbHost": "localhost",
+        "dbPort": 1433,
+        "dbName": "TruckWeighing_ABC_TRAM01",
+        "dbUsername": "sa",
+        "dbPassword": "********",
+        "dbInstanceName": "SQLEXPRESS01",
+        "trangThai": 1,
+        "ngayTao": "2025-01-01T00:00:00Z",
+        "ngayCapNhat": "2025-01-01T00:00:00Z"
+      }
+    },
+    "TramCanCreate": {
+      "type": "object",
+      "required": [
+        "khachHangId",
+        "maTramCan",
+        "tenTramCan",
+        "dbHost",
+        "dbName",
+        "dbUsername",
+        "dbPassword"
+      ],
+      "properties": {
+        "khachHangId": {
+          "type": "number",
+          "description": "ID khách hàng sở hữu"
+        },
+        "maTramCan": {
+          "type": "string",
+          "description": "Mã trạm cân"
+        },
+        "tenTramCan": {
+          "type": "string",
+          "description": "Tên trạm cân"
+        },
+        "diaChi": {
+          "type": "string",
+          "description": "Địa chỉ trạm cân"
+        },
+        "dbHost": {
+          "type": "string",
+          "description": "Host database"
+        },
+        "dbPort": {
+          "type": "number",
+          "description": "Port database"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "Tên database"
+        },
+        "dbUsername": {
+          "type": "string",
+          "description": "Username database"
+        },
+        "dbPassword": {
+          "type": "string",
+          "description": "Password database"
+        },
+        "dbInstanceName": {
+          "type": "string",
+          "description": "Instance name (cho MSSQL)"
+        }
+      },
+      "example": {
+        "khachHangId": 1,
+        "maTramCan": "TRAM03",
+        "tenTramCan": "Trạm cân số 3 - ABC",
+        "diaChi": "789 Đường GHI, Q3, HCM",
+        "dbHost": "localhost",
+        "dbPort": 1433,
+        "dbName": "TruckWeighing_ABC_TRAM03",
+        "dbUsername": "sa",
+        "dbPassword": "password123",
+        "dbInstanceName": "SQLEXPRESS01"
+      }
+    },
+    "TramCanUpdate": {
+      "type": "object",
+      "properties": {
+        "maTramCan": {
+          "type": "string",
+          "description": "Mã trạm cân"
+        },
+        "tenTramCan": {
+          "type": "string",
+          "description": "Tên trạm cân"
+        },
+        "diaChi": {
+          "type": "string",
+          "description": "Địa chỉ trạm cân"
+        },
+        "dbHost": {
+          "type": "string",
+          "description": "Host database"
+        },
+        "dbPort": {
+          "type": "number",
+          "description": "Port database"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "Tên database"
+        },
+        "dbUsername": {
+          "type": "string",
+          "description": "Username database"
+        },
+        "dbPassword": {
+          "type": "string",
+          "description": "Password database"
+        },
+        "dbInstanceName": {
+          "type": "string",
+          "description": "Instance name (cho MSSQL)"
+        },
+        "trangThai": {
+          "type": "number",
+          "description": "Trạng thái (1 = hoạt động, 0 = vô hiệu)"
+        }
+      },
+      "example": {
+        "tenTramCan": "Trạm cân số 1 - ABC (Cập nhật)",
+        "diaChi": "123 Đường ABC mới, Q1, HCM",
+        "trangThai": 1
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "sessionAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "Session",
+          "description": "Session token nhận được từ login flow.\nCó thể gửi qua header: \n- Authorization: Bearer {sessionToken}\n- X-Session-Token: {sessionToken}\n"
         }
       }
     }
