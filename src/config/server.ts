@@ -9,13 +9,21 @@ import compression from "compression";
 export const configureServer = (app: express.Application) => {
   // Security middleware
   app.use(helmet());
-
-  // Enable CORS
   app.use(
     cors({
-      origin: config.corsOrigin,
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
+      origin: function (origin, callback) {
+        if (!origin) {
+          // ✅ Cho phép nếu không có origin (mobile, Postman, etc.)
+          return callback(null, true);
+        }
+
+        if (config.corsOrigin.includes(origin)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error("Not allowed by CORS"));
+      },
+      credentials: true,
     })
   );
 
