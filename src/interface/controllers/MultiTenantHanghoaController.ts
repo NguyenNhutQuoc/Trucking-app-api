@@ -38,7 +38,8 @@ export class MultiTenantHanghoaController {
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Lấy danh sách hàng hóa thành công"
+        "Danh sách hàng hóa",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -47,17 +48,9 @@ export class MultiTenantHanghoaController {
 
   getHanghoaById = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.params;
       const hanghoaService = this.createHanghoaService(req);
-      const id = parseInt(req.params.id);
-      const hanghoa = await hanghoaService.getHanghoaById(id);
-
-      if (!hanghoa) {
-        return ApiResponse.error(
-          res,
-          "Không tìm thấy hàng hóa",
-          HttpStatus.NOT_FOUND
-        );
-      }
+      const hanghoa = await hanghoaService.getHanghoaById(Number(id));
 
       return ApiResponse.success(
         res,
@@ -68,7 +61,75 @@ export class MultiTenantHanghoaController {
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Lấy thông tin hàng hóa thành công"
+        "Chi tiết hàng hóa",
+        HttpStatus.OK
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getHanghoaByMa = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { ma } = req.params;
+      const hanghoaService = this.createHanghoaService(req);
+      const hanghoa = await hanghoaService.getHanghoaByMa(ma);
+
+      return ApiResponse.success(
+        res,
+        {
+          data: hanghoa,
+          tenantInfo: {
+            khachHang: req.tenantInfo!.khachHang.tenKhachHang,
+            tramCan: req.tenantInfo!.tramCan.tenTramCan,
+          },
+        },
+        "Chi tiết hàng hóa",
+        HttpStatus.OK
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  searchHanghoaByName = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { name } = req.query as { name: string };
+      const hanghoaService = this.createHanghoaService(req);
+
+      if (!name || name.trim() === "") {
+        const hanghoas = await hanghoaService.getAllHanghoas();
+        return ApiResponse.success(
+          res,
+          {
+            data: hanghoas,
+            tenantInfo: {
+              khachHang: req.tenantInfo!.khachHang.tenKhachHang,
+              tramCan: req.tenantInfo!.tramCan.tenTramCan,
+            },
+          },
+          "Danh sách hàng hóa",
+          HttpStatus.OK
+        );
+      }
+
+      const hanghoas = await hanghoaService.searchHanghoaByName(name);
+
+      return ApiResponse.success(
+        res,
+        {
+          data: hanghoas,
+          tenantInfo: {
+            khachHang: req.tenantInfo!.khachHang.tenKhachHang,
+            tramCan: req.tenantInfo!.tramCan.tenTramCan,
+          },
+        },
+        `Kết quả tìm kiếm "${name}"`,
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -77,14 +138,14 @@ export class MultiTenantHanghoaController {
 
   createHanghoa = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const hanghoaService = this.createHanghoaService(req);
       const hanghoaData = req.body;
-      const newHanghoa = await hanghoaService.createHanghoa(hanghoaData);
+      const hanghoaService = this.createHanghoaService(req);
+      const hanghoa = await hanghoaService.createHanghoa(hanghoaData);
 
       return ApiResponse.success(
         res,
         {
-          data: newHanghoa,
+          data: hanghoa,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
@@ -100,32 +161,25 @@ export class MultiTenantHanghoaController {
 
   updateHanghoa = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const hanghoaService = this.createHanghoaService(req);
-      const id = parseInt(req.params.id);
+      const { id } = req.params;
       const hanghoaData = req.body;
-      const updatedHanghoa = await hanghoaService.updateHanghoa(
-        id,
+      const hanghoaService = this.createHanghoaService(req);
+      const hanghoa = await hanghoaService.updateHanghoa(
+        Number(id),
         hanghoaData
       );
-
-      if (!updatedHanghoa) {
-        return ApiResponse.error(
-          res,
-          "Không tìm thấy hàng hóa để cập nhật",
-          HttpStatus.NOT_FOUND
-        );
-      }
 
       return ApiResponse.success(
         res,
         {
-          data: updatedHanghoa,
+          data: hanghoa,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Cập nhật hàng hóa thành công"
+        "Cập nhật hàng hóa thành công",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -134,64 +188,21 @@ export class MultiTenantHanghoaController {
 
   deleteHanghoa = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.params;
       const hanghoaService = this.createHanghoaService(req);
-      const id = parseInt(req.params.id);
-      const deleted = await hanghoaService.deleteHanghoa(id);
-
-      if (!deleted) {
-        return ApiResponse.error(
-          res,
-
-          "Không tìm thấy hàng hóa để xóa",
-          HttpStatus.NOT_FOUND
-        );
-      }
+      await hanghoaService.deleteHanghoa(Number(id));
 
       return ApiResponse.success(
         res,
         {
+          data: null,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Xóa hàng hóa thành công"
-      );
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  searchHanghoaByName = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const hanghoaService = this.createHanghoaService(req);
-      const { name } = req.query;
-
-      if (!name || typeof name !== "string") {
-        return ApiResponse.error(
-          res,
-
-          "Tên hàng hóa không được để trống",
-          HttpStatus.BAD_REQUEST
-        );
-      }
-
-      const hanghoas = await hanghoaService.searchHanghoaByName(name);
-
-      return ApiResponse.success(
-        res,
-        {
-          data: hanghoas,
-          tenantInfo: {
-            khachHang: req.tenantInfo!.khachHang.tenKhachHang,
-            tramCan: req.tenantInfo!.tramCan.tenTramCan,
-          },
-        },
-        "Tìm kiếm hàng hóa thành công"
+        "Xóa hàng hóa thành công",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);

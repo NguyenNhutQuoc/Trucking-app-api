@@ -15,7 +15,7 @@ function asyncMiddleware(handler: any) {
 // Tất cả routes đều require authentication với database setup
 router.use(authMiddleware.authenticate as import("express").RequestHandler);
 
-// Phieucan routes
+// Basic CRUD routes
 router.get("/", asyncMiddleware(multiTenantPhieucanController.getAllPhieucans));
 router.get(
   "/:id",
@@ -31,10 +31,56 @@ router.delete(
   asyncMiddleware(multiTenantPhieucanController.deletePhieucan)
 );
 
-// Statistics
+// Weighing operations
+router.post(
+  "/:id/complete",
+  asyncMiddleware(multiTenantPhieucanController.completeWeighing)
+);
+router.post(
+  "/:id/cancel",
+  asyncMiddleware(multiTenantPhieucanController.cancelPhieucan)
+);
+
+// Status-based queries
+router.get(
+  "/status/completed",
+  asyncMiddleware(multiTenantPhieucanController.getCompletedWeighings)
+);
+router.get(
+  "/status/pending",
+  asyncMiddleware(multiTenantPhieucanController.getPendingWeighings)
+);
+router.get(
+  "/status/canceled",
+  asyncMiddleware(multiTenantPhieucanController.getCanceledWeighings)
+);
+
+// Search and filter routes
+router.get(
+  "/date-range/search",
+  asyncMiddleware(multiTenantPhieucanController.getPhieucansByDateRange)
+);
+router.get(
+  "/vehicle/:soxe",
+  asyncMiddleware(multiTenantPhieucanController.getPhieucansBySoxe)
+);
+router.get(
+  "/product/:mahang",
+  asyncMiddleware(multiTenantPhieucanController.getPhieucansByProduct)
+);
+router.get(
+  "/customer/:makh",
+  asyncMiddleware(multiTenantPhieucanController.getPhieucansByCustomer)
+);
+
+// Statistics routes
 router.get(
   "/statistics/today",
   asyncMiddleware(multiTenantPhieucanController.getTodayStatistics)
+);
+router.get(
+  "/statistics/weight",
+  asyncMiddleware(multiTenantPhieucanController.getWeightStatistics)
 );
 
 export default router;

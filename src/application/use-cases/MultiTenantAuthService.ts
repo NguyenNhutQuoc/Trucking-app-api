@@ -124,21 +124,26 @@ export class MultiTenantAuthService {
    * Step 2: Chọn trạm cân và activate session
    */
   async selectStation(
-    selectionData: StationSelectionRequest
+    selectionData: StationSelectionRequest,
+    isActivate: boolean = false
   ): Promise<StationSelectionResponse> {
     const { sessionToken, tramCanId } = selectionData;
 
-    // Validate session
-    const tempSession = await this.userSessionRepository.getTempSession(
+    const sessionData: any = await this.userSessionRepository.getSessionByToken(
       sessionToken
     );
-    if (!tempSession) {
+    console.log("Is activating session:", isActivate);
+
+    console.log("Session Data:", sessionData);
+
+    // Validate session
+    if (!sessionData) {
       throw new UnauthorizedError("Session không hợp lệ hoặc đã hết hạn");
     }
 
     // Validate trạm cân
     const tramCan = await this.tramCanRepository.getById(tramCanId);
-    if (!tramCan || tramCan.khachHangId !== tempSession.khachHangId) {
+    if (!tramCan || tramCan.khachHangId !== sessionData.khachHangId) {
       throw new UnauthorizedError(
         "Trạm cân không hợp lệ hoặc không thuộc về khách hàng này"
       );
@@ -162,10 +167,10 @@ export class MultiTenantAuthService {
     const newSessionToken = this.generateSessionToken();
     await this.userSessionRepository.createFullSession({
       sessionToken: newSessionToken,
-      khachHangId: tempSession.khachHangId,
+      khachHangId: sessionData.khachHangId,
       tramCanId: tramCan.id,
-      maKhachHang: tempSession.maKhachHang || "",
-      tenKhachHang: tempSession.tenKhachHang || "",
+      maKhachHang: sessionData.maKhachHang || "",
+      tenKhachHang: sessionData.tenKhachHang || "",
       tenTramCan: tramCan.tenTramCan,
       currentDbConfig: JSON.stringify(dbConfig),
       ngayHetHan: addDays(new Date(), 30),
@@ -182,8 +187,8 @@ export class MultiTenantAuthService {
         dbConfig,
       },
       khachHang: {
-        maKhachHang: tempSession.maKhachHang || "",
-        tenKhachHang: tempSession.tenKhachHang || "",
+        maKhachHang: sessionData.maKhachHang || "",
+        tenKhachHang: sessionData.tenKhachHang || "",
       },
     };
   }
@@ -199,6 +204,8 @@ export class MultiTenantAuthService {
     const session = await this.userSessionRepository.getActiveSession(
       sessionToken
     );
+
+    console.log("Validating session:", sessionToken);
     if (!session) {
       throw new UnauthorizedError("Session không hợp lệ hoặc đã hết hạn");
     }
@@ -214,6 +221,42 @@ export class MultiTenantAuthService {
       },
       dbConfig: JSON.parse(session.currentDbConfig),
     };
+  }
+
+  async validateAnySession(sessionToken: string) {
+    // Thử tìm full session trước
+    try {
+      const fullSession = await this.userSessionRepository.getActiveSession(
+        sessionToken
+      );
+      if (fullSession) {
+        return {
+          type: "full",
+          sessionToken: fullSession.sessionToken,
+          khachHangId: fullSession.khachHangId,
+          tramCanId: fullSession.tramCanId,
+          // ... other properties
+        };
+      }
+    } catch (error) {
+      // Ignore và thử temp session
+    }
+
+    // Thử tìm temp session
+    const tempSession = await this.userSessionRepository.getTempSession(
+      sessionToken
+    );
+    if (tempSession) {
+      return {
+        type: "temp",
+        sessionToken: tempSession.sessionToken,
+        khachHangId: tempSession.khachHangId,
+        tramCanId: null,
+        // ... other properties
+      };
+    }
+
+    throw new UnauthorizedError("Session không hợp lệ hoặc đã hết hạn");
   }
 
   /**

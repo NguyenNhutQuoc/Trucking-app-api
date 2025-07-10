@@ -23,6 +23,7 @@ declare global {
         dbConfig: any;
         dataSource: any; // TypeORM DataSource
       };
+      session?: any; // Add this line to allow session property
     }
   }
 }
@@ -89,8 +90,8 @@ export class MultiTenantAuthMiddleware {
     try {
       const sessionToken =
         (req.headers["x-session-token"] as string) ||
-        req.headers["authorization"]?.replace("Bearer ", "") ||
-        req.body.sessionToken;
+        req.headers["authorization"]?.replace("Bearer ", "");
+      console.log("Session Token:", sessionToken);
 
       if (!sessionToken) {
         return ApiResponse.error(
@@ -112,6 +113,41 @@ export class MultiTenantAuthMiddleware {
         dataSource: null,
       };
 
+      next();
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        return ApiResponse.error(res, error.message, HttpStatus.UNAUTHORIZED);
+      }
+      next(error);
+    }
+  };
+
+  // Middleware mới - chấp nhận cả temp session và full session
+  validateAnySession = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const sessionToken =
+        (req.headers["x-session-token"] as string) ||
+        req.headers["authorization"]?.replace("Bearer ", "");
+
+      if (!sessionToken) {
+        return ApiResponse.error(
+          res,
+          "Session token là bắt buộc",
+          HttpStatus.UNAUTHORIZED
+        );
+      }
+
+      // Kiểm tra cả temp session và full session
+      const sessionInfo = await this.multiTenantAuthService.validateAnySession(
+        sessionToken
+      );
+
+      // Gắn thông tin session vào request
+      req.session = sessionInfo;
       next();
     } catch (error) {
       if (error instanceof UnauthorizedError) {

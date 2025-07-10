@@ -10,6 +10,11 @@ export class UserSessionRepository implements IUserSessionRepository {
   constructor() {
     this.repository = AppDataSource.getRepository(UserSession);
   }
+  getSessionByToken(sessionToken: string): Promise<UserSession | null> {
+    return this.repository.findOne({
+      where: { sessionToken },
+    });
+  }
 
   async createTempSession(data: {
     sessionToken: string;

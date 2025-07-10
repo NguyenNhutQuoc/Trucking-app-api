@@ -51,6 +51,7 @@ export interface IUserSessionRepository {
     ngayHetHan: Date;
   }): Promise<UserSession>;
 
+  getSessionByToken(sessionToken: string): Promise<UserSession | null>;
   getTempSession(sessionToken: string): Promise<Partial<UserSession> | null>;
   getActiveSession(sessionToken: string): Promise<UserSession | null>;
   deleteTempSession(sessionToken: string): Promise<boolean>;

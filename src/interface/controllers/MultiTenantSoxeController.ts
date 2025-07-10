@@ -38,7 +38,8 @@ export class MultiTenantSoxeController {
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Lấy danh sách số xe thành công"
+        "Danh sách số xe",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -47,17 +48,9 @@ export class MultiTenantSoxeController {
 
   getSoxeById = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.params;
       const soxeService = this.createSoxeService(req);
-      const id = parseInt(req.params.id);
-      const soxe = await soxeService.getSoxeById(id);
-
-      if (!soxe) {
-        return ApiResponse.error(
-          res,
-          "Không tìm thấy số xe",
-          HttpStatus.NOT_FOUND
-        );
-      }
+      const soxe = await soxeService.getSoxeById(Number(id));
 
       return ApiResponse.success(
         res,
@@ -68,7 +61,31 @@ export class MultiTenantSoxeController {
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Lấy thông tin số xe thành công"
+        "Chi tiết số xe",
+        HttpStatus.OK
+      );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getSoxeBySoxe = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { soxe } = req.params;
+      const soxeService = this.createSoxeService(req);
+      const result = await soxeService.getSoxeBySoxe(soxe);
+
+      return ApiResponse.success(
+        res,
+        {
+          data: result,
+          tenantInfo: {
+            khachHang: req.tenantInfo!.khachHang.tenKhachHang,
+            tramCan: req.tenantInfo!.tramCan.tenTramCan,
+          },
+        },
+        "Chi tiết số xe",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -77,14 +94,14 @@ export class MultiTenantSoxeController {
 
   createSoxe = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const soxeService = this.createSoxeService(req);
       const soxeData = req.body;
-      const newSoxe = await soxeService.createSoxe(soxeData);
+      const soxeService = this.createSoxeService(req);
+      const soxe = await soxeService.createSoxe(soxeData);
 
       return ApiResponse.success(
         res,
         {
-          data: newSoxe,
+          data: soxe,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
@@ -100,29 +117,22 @@ export class MultiTenantSoxeController {
 
   updateSoxe = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const soxeService = this.createSoxeService(req);
-      const id = parseInt(req.params.id);
+      const { id } = req.params;
       const soxeData = req.body;
-      const updatedSoxe = await soxeService.updateSoxe(id, soxeData);
-
-      if (!updatedSoxe) {
-        return ApiResponse.error(
-          res,
-          "Không tìm thấy số xe để cập nhật",
-          HttpStatus.NOT_FOUND
-        );
-      }
+      const soxeService = this.createSoxeService(req);
+      const soxe = await soxeService.updateSoxe(Number(id), soxeData);
 
       return ApiResponse.success(
         res,
         {
-          data: updatedSoxe,
+          data: soxe,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Cập nhật số xe thành công"
+        "Cập nhật số xe thành công",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);
@@ -131,62 +141,21 @@ export class MultiTenantSoxeController {
 
   deleteSoxe = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.params;
       const soxeService = this.createSoxeService(req);
-      const id = parseInt(req.params.id);
-      const deleted = await soxeService.deleteSoxe(id);
-
-      if (!deleted) {
-        return ApiResponse.error(
-          res,
-          "Không tìm thấy số xe để xóa",
-          HttpStatus.NOT_FOUND
-        );
-      }
+      await soxeService.deleteSoxe(Number(id));
 
       return ApiResponse.success(
         res,
         {
+          data: null,
           tenantInfo: {
             khachHang: req.tenantInfo!.khachHang.tenKhachHang,
             tramCan: req.tenantInfo!.tramCan.tenTramCan,
           },
         },
-        "Xóa số xe thành công"
-      );
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  searchSoxeByNumber = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const soxeService = this.createSoxeService(req);
-      const { number } = req.query;
-
-      if (!number || typeof number !== "string") {
-        return ApiResponse.error(
-          res,
-          "Số xe không được để trống",
-          HttpStatus.BAD_REQUEST
-        );
-      }
-
-      const soxes = await soxeService.getSoxeBySoxe(number);
-
-      return ApiResponse.success(
-        res,
-        {
-          data: soxes,
-          tenantInfo: {
-            khachHang: req.tenantInfo!.khachHang.tenKhachHang,
-            tramCan: req.tenantInfo!.tramCan.tenTramCan,
-          },
-        },
-        "Tìm kiếm số xe thành công"
+        "Xóa số xe thành công",
+        HttpStatus.OK
       );
     } catch (error) {
       next(error);

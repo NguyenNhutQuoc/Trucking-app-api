@@ -45,20 +45,24 @@ export class MultiTenantAuthController {
    */
   selectStation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { sessionToken, tramCanId } = req.body;
+      const sessionToken = req.headers["x-session-token"] as string;
+      const { tramCanId, isActivated = false } = req.body;
 
-      if (!sessionToken || !tramCanId) {
+      if (!tramCanId) {
         return ApiResponse.error(
           res,
-          "Session token và ID trạm cân là bắt buộc",
+          "ID trạm cân là bắt buộc",
           HttpStatus.BAD_REQUEST
         );
       }
 
-      const result = await this.multiTenantAuthService.selectStation({
-        sessionToken,
-        tramCanId: Number(tramCanId),
-      });
+      const result = await this.multiTenantAuthService.selectStation(
+        {
+          sessionToken,
+          tramCanId: Number(tramCanId),
+        },
+        isActivated
+      );
 
       return ApiResponse.success(
         res,

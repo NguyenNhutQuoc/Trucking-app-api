@@ -15,6 +15,7 @@ import multiTenantKhachhangRoutes from "./multiTenantKhachhangRoutes";
 import multiTenantSoxeRoutes from "./multiTenantSoxeRoutes";
 import multiTenantNhomQuyenRoutes from "./multiTenantNhomQuyenRoutes";
 import tramCanRoute from "./tramCanRoutes";
+import { multitenantNhanvien } from "./multiTenantNhanVienRoutes";
 
 const router = Router();
 
@@ -27,7 +28,8 @@ router.use("/hanghoa", multiTenantHanghoaRoutes);
 router.use("/khachhang", multiTenantKhachhangRoutes);
 router.use("/soxe", multiTenantSoxeRoutes);
 router.use("/nhomquyen", multiTenantNhomQuyenRoutes);
-router.use("tramcan", tramCanRoute);
+router.use("/tramcan", tramCanRoute);
+router.use("/nhanvien", multitenantNhanvien);
 
 // Legacy routes (có thể giữ lại cho admin hoặc migration)
 router.use("/legacy/auth", authRoutes);

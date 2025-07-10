@@ -29,15 +29,15 @@ function asyncMiddleware(handler: any) {
 }
 
 // Public routes - none
-
-// Protected routes (require session validation)
-tramCanRoute.use(asyncMiddleware(authMiddleware.validateSessionOnly));
-
 // Get my stations (available to authenticated users)
 tramCanRoute.get(
   "/my-stations",
+  asyncMiddleware(authMiddleware.validateAnySession),
   asyncMiddleware(tramCanController.getMyStations)
 );
+
+// Protected routes (require session validation)
+tramCanRoute.use(asyncMiddleware(authMiddleware.validateSessionOnly));
 
 // Switch station (available to authenticated users)
 tramCanRoute.post(

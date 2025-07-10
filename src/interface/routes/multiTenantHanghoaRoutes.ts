@@ -15,7 +15,7 @@ function asyncMiddleware(handler: any) {
 // Tất cả routes đều require authentication với database setup
 router.use(authMiddleware.authenticate as import("express").RequestHandler);
 
-// Hanghoa routes
+// Basic CRUD routes
 router.get("/", asyncMiddleware(multiTenantHanghoaController.getAllHanghoas));
 router.get(
   "/:id",
@@ -27,9 +27,15 @@ router.delete(
   "/:id",
   asyncMiddleware(multiTenantHanghoaController.deleteHanghoa)
 );
+
+// Search routes
 router.get(
   "/search",
   asyncMiddleware(multiTenantHanghoaController.searchHanghoaByName)
+);
+router.get(
+  "/code/:ma",
+  asyncMiddleware(multiTenantHanghoaController.getHanghoaByMa)
 );
 
 export default router;

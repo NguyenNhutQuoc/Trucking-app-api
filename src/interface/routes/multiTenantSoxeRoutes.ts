@@ -15,15 +15,17 @@ function asyncMiddleware(handler: any) {
 // Tất cả routes đều require authentication với database setup
 router.use(authMiddleware.authenticate as import("express").RequestHandler);
 
-// Soxe routes
+// Basic CRUD routes
 router.get("/", asyncMiddleware(multiTenantSoxeController.getAllSoxes));
 router.get("/:id", asyncMiddleware(multiTenantSoxeController.getSoxeById));
 router.post("/", asyncMiddleware(multiTenantSoxeController.createSoxe));
 router.put("/:id", asyncMiddleware(multiTenantSoxeController.updateSoxe));
 router.delete("/:id", asyncMiddleware(multiTenantSoxeController.deleteSoxe));
+
+// Search by license plate number
 router.get(
-  "/search",
-  asyncMiddleware(multiTenantSoxeController.searchSoxeByNumber)
+  "/number/:soxe",
+  asyncMiddleware(multiTenantSoxeController.getSoxeBySoxe)
 );
 
 export default router;

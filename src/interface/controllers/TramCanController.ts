@@ -33,11 +33,7 @@ export class TramCanController {
    */
   getMyStations = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Lấy thông tin khách hàng từ session
-      const sessionToken = req.headers["x-session-token"] as string;
-      const sessionInfo = await this.tramCanService.getSessionInfo(
-        sessionToken
-      );
+      const sessionInfo = req.session; // Từ middleware
 
       const tramCans = await this.tramCanService.getTramCansByKhachHang(
         sessionInfo.khachHangId
@@ -48,7 +44,9 @@ export class TramCanController {
         {
           khachHang: sessionInfo.khachHang,
           tramCans: tramCans,
-          currentStation: sessionInfo.tramCan || null,
+          currentStation:
+            sessionInfo.type === "full" ? sessionInfo.tramCan : null,
+          sessionType: sessionInfo.type, // temp hoặc full
         },
         "Danh sách trạm cân của bạn",
         HttpStatus.OK
@@ -86,6 +84,7 @@ export class TramCanController {
     try {
       const { tramCanId } = req.body;
       const sessionToken = req.headers["x-session-token"] as string;
+      console.log("Switching station with token:", sessionToken);
 
       const result = await this.tramCanService.switchStation(
         sessionToken,
